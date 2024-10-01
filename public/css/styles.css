@@ -111,51 +111,6 @@ li.logout:hover a{
     color: #dc2626 !important;
 }
 
-/* Post component styles */
-.post-component textarea {
-    background-color: #15202b;
-    color: #ffffff;
-    border: none;
-    resize: none;
-}
-
-.post-component textarea:focus {
-    background-color: #15202b;
-    color: #ffffff;
-    box-shadow: none;
-}
-
-.post-component .btn-primary {
-    background-color: #1da1f2;
-    border-color: #1da1f2;
-}
-
-.post-component .btn-primary:hover {
-    background-color: #1a91da;
-    border-color: #1a91da;
-}
-
-.post-component .btn-outline-light {
-    color: #1da1f2;
-    border-color: #1da1f2;
-}
-
-.post-component .btn-outline-light:hover {
-    background-color: #1da1f2;
-    color: #ffffff;
-}
-
-.image-preview img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.ajax-load {
-    padding: 10px 0px;
-    width: 100%;
-}
-
-
 /* Responsive adjustments */
 @media (min-width: 769px) {
     .sidebar {

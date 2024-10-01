@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'isAdmin',
     ];
 
     /**
@@ -45,3 +46,4 @@ class User extends Authenticatable
         ];
     }
 }
+

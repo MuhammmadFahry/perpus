@@ -27,8 +27,16 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('Home'));
+            if (auth()->user()->isAdmin) {
+
+                // dd('admin.welcome');
+                return redirect()->route('admin.index');
+            } else {
+                return redirect('/');
+            }
+            // dd(auth()->user()->isAdmin);
         }
+
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

@@ -20,15 +20,9 @@
         <x-navbar></x-navbar>
 
         <!-- Include Sidebar Component -->
-        <x-sidebar>
-            <x-slot:img>
-                {{ $user['profile']['profile_picture'] }}
-            </x-slot:img>
-            <x-slot:nama>
-                {{ $user['name'] }}
-            </x-slot:nama>
-        </x-sidebar>
-        @yield('sidebar')
+        <x-sidebar-perpus img=""
+        nama="STARBOY"
+        ></x-sidebar>
 
         <!-- Content -->
         <div class="content content-shifted" id="content">
