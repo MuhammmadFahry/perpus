@@ -11,11 +11,49 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4>Pengaturan Buku</h4>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBookModal">
+            <button id="toggleAddBookForm" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Tambah Buku Baru
             </button>
         </div>
 
+        <!-- Form to add a new book, initially hidden -->
+        <div class="card-body" id="addBookForm" style="display: none;">
+            <form id="bookForm" action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="title">Judul Buku</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="author">Pengarang</label>
+                    <input type="text" class="form-control" id="author" name="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="publication_year">Tahun Terbit</label>
+                    <input type="number" class="form-control" id="publication_year" name="publication_year" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Kategori</label>
+                    <select class="form-control" id="category" name="category" required>
+                        <option value="fiksi">Fiksi</option>
+                        <option value="non-fiksi">Non-Fiksi</option>
+                        <option value="pendidikan">Pendidikan</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Deskripsi Buku</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="book_image">Foto Buku</label>
+                    <input type="file" class="form-control-file" id="book_image" name="book_image" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </form>
+        </div>
+
+        <!-- Book List Table -->
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -26,23 +64,22 @@
                             <th>Pengarang</th>
                             <th>Tahun Terbit</th>
                             <th>Kategori</th>
+                            <th>Deskripsi</th>
+                            <th>Foto</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="bookTableBody">
                         @forelse($books as $book)
-                        <tr>
+                        <tr id="bookRow{{ $book->id }}">
                             <td>{{ $book->id }}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->author }}</td>
                             <td>{{ $book->publication_year }}</td>
                             <td>{{ ucfirst($book->category) }}</td>
+                            <td>{{ Str::limit($book->description, 50) }}</td>
+                            <td><img src="{{ asset('storage/' . $book->book_image) }}" alt="{{ $book->title }}" width="50"></td>
                             <td>
-                                <!-- Edit button -->
-                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editBookModal{{ $book->id }}">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-
                                 <!-- Delete form -->
                                 <form action="{{ route('books.destroy', $book->id) }}" method="POST" class="d-inline">
                                     @csrf
@@ -55,7 +92,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center">Tidak ada buku yang tersedia.</td>
+                            <td colspan="8" class="text-center">Tidak ada buku yang tersedia.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -65,91 +102,74 @@
             {{ $books->links() }}
         </div>
     </div>
-
-    <!-- Tambah Buku Modal -->
-    <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addBookModalLabel">Tambah Buku Baru</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('books.store') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="title">Judul Buku</label>
-                            <input type="text" class="form-control" id="title" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="author">Pengarang</label>
-                            <input type="text" class="form-control" id="author" name="author" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="publication_year">Tahun Terbit</label>
-                            <input type="number" class="form-control" id="publication_year" name="publication_year" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Kategori</label>
-                            <select class="form-control" id="category" name="category" required>
-                                <option value="fiksi">Fiksi</option>
-                                <option value="non-fiksi">Non-Fiksi</option>
-                                <option value="pendidikan">Pendidikan</option>
-                                <option value="lainnya">Lainnya</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Buku Modal -->
-    @foreach($books as $book)
-    <div class="modal fade" id="editBookModal{{ $book->id }}" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel{{ $book->id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editBookModalLabel{{ $book->id }}">Edit Buku</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('books.update', $book->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="title">Judul Buku</label>
-                            <input type="text" class="form-control" id="title" name="title" value="{{ $book->title }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="author">Pengarang</label>
-                            <input type="text" class="form-control" id="author" name="author" value="{{ $book->author }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="publication_year">Tahun Terbit</label>
-                            <input type="number" class="form-control" id="publication_year" name="publication_year" value="{{ $book->publication_year }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Kategori</label>
-                            <select class="form-control" id="category" name="category" required>
-                                <option value="fiksi" {{ $book->category == 'fiksi' ? 'selected' : '' }}>Fiksi</option>
-                                <option value="non-fiksi" {{ $book->category == 'non-fiksi' ? 'selected' : '' }}>Non-Fiksi</option>
-                                <option value="pendidikan" {{ $book->category == 'pendidikan' ? 'selected' : '' }}>Pendidikan</option>
-                                <option value="lainnya" {{ $book->category == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-
 </div>
+
+<!-- Search Books -->
+<div class="container mt-4">
+    <h4>Cari Buku</h4>
+    <form action="{{ route('books.search') }}" method="GET">
+        <div class="form-group">
+            <input type="text" class="form-control" name="search" placeholder="Cari judul atau pengarang buku...">
+        </div>
+        <button type="submit" class="btn btn-primary">Cari</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // Toggle Add Book Form
+    $('#toggleAddBookForm').click(function() {
+        $('#addBookForm').toggle(); // Show/hide form
+    });
+
+    // Handle form submission via AJAX to prevent page reload
+    $('#bookForm').submit(function(event) {
+        event.preventDefault(); // Prevent the form from submitting the normal way
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response.success) {
+                    // Add the new book row to the table
+                    const newBook = response.book;
+                    const newRow = `
+                        <tr id="bookRow${newBook.id}">
+                            <td>${newBook.id}</td>
+                            <td>${newBook.title}</td>
+                            <td>${newBook.author}</td>
+                            <td>${newBook.publication_year}</td>
+                            <td>${newBook.category.charAt(0).toUpperCase() + newBook.category.slice(1)}</td>
+                            <td>${newBook.description}</td>
+                            <td><img src="/storage/${newBook.book_image}" alt="${newBook.title}" width="50"></td>
+                            <td>
+                                <form action="/books/${newBook.id}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    `;
+                    $('#bookTableBody').append(newRow); // Append new book to table
+
+                    // Hide the form and reset it
+                    $('#addBookForm').hide();
+                    $('#bookForm')[0].reset();
+                }
+            },
+            error: function(response) {
+                alert('Ada kesalahan, silakan coba lagi.');
+            }
+        });
+    });
+</script>
 @endsection

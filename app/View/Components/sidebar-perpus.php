@@ -21,6 +21,11 @@ class sidebar-perpus extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.sidebar-perpus');
+        return view('component
+        
+        
+        
+        
+        s.sidebar-perpus');
     }
 }

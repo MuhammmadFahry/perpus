@@ -1,5 +1,6 @@
 <?php
 
+// app/Http/Controllers/BookController.php
 namespace App\Http\Controllers;
 
 use App\Models\Book;
@@ -10,7 +11,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::paginate(10);
-        return view('books.index', compact('books'));
+        return view('admin.books', compact('books'));
     }
 
     public function store(Request $request)
@@ -18,37 +19,32 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required',
             'author' => 'required',
-            'publication_year' => 'required|integer',
-            'isbn' => 'nullable',
-            'category' => 'required',
+            'publication_year' => 'required|numeric',
+            'category' => 'required'
         ]);
 
         Book::create($request->all());
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan.');
+        return redirect()->route('admin.books')->with('success', 'Buku berhasil ditambahkan.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Book $book)
     {
         $request->validate([
             'title' => 'required',
             'author' => 'required',
-            'publication_year' => 'required|integer',
-            'isbn' => 'nullable',
-            'category' => 'required',
+            'publication_year' => 'required|numeric',
+            'category' => 'required'
         ]);
 
-        $book = Book::findOrFail($id);
         $book->update($request->all());
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui.');
+        return redirect()->route('admin.books')->with('success', 'Buku berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $book = Book::findOrFail($id);
         $book->delete();
-
-        return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus.');
+        return redirect()->route('admin.books')->with('success', 'Buku berhasil dihapus.');
     }
 }

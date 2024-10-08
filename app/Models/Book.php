@@ -1,5 +1,6 @@
 <?php
 
+// app/Models/Book.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,5 +10,5 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'author', 'year'];
+    protected $fillable = ['title', 'author', 'publication_year', 'category'];
 }
