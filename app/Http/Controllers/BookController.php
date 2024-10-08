@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/BookController.php
 namespace App\Http\Controllers;
 
 use App\Models\Book;
@@ -8,43 +7,53 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
-    {
-        $books = Book::paginate(10);
-        return view('admin.books', compact('books'));
-    }
-
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'publication_year' => 'required|numeric',
-            'category' => 'required'
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'author' => 'required',
+        'publication_year' => 'required|numeric',
+        'category' => 'required',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
+    ]);
 
-        Book::create($request->all());
+    $book = new Book();
+    $book->title = $request->title;
+    $book->author = $request->author;
+    $book->publication_year = $request->publication_year;
+    $book->category = $request->category;
 
-        return redirect()->route('admin.books')->with('success', 'Buku berhasil ditambahkan.');
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('books', 'public');
+        $book->image = $imagePath;
     }
 
-    public function update(Request $request, Book $book)
-    {
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'publication_year' => 'required|numeric',
-            'category' => 'required'
-        ]);
+    $book->save();
 
-        $book->update($request->all());
+    return response()->json([
+        'success' => true,
+        'book' => $book,
+    ]);
+}
 
-        return redirect()->route('admin.books')->with('success', 'Buku berhasil diperbarui.');
-    }
+public function destroy($id)
+{
+    $book = Book::find($id);
 
-    public function destroy(Book $book)
-    {
+    if ($book) {
+        if ($book->image) {
+            Storage::disk('public')->delete($book->image); // Delete image from storage
+        }
         $book->delete();
-        return redirect()->route('admin.books')->with('success', 'Buku berhasil dihapus.');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Buku berhasil dihapus.',
+        ]);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Buku tidak ditemukan.',
+        ]);
     }
 }

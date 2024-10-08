@@ -61,12 +61,12 @@
         @if (auth()->user()->isAdmin)
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.books') ? 'active' : '' }}" href="{{ route('admin.books') }}">
-                <i class="fas fa-cog me-2"></i> Setting Buku
+                <i class="fas fa-book me-2"></i> Buku
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.penalties') ? 'active' : '' }}" href="{{ route('admin.penalties') }}">
-                <i class="fas fa-money-bill me-2"></i> Setting Denda
+                <i class="fas fa-money-bill me-2"></i> Denda
             </a>
         </li>
         <li class="nav-item">
