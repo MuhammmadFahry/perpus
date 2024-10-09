@@ -7,8 +7,8 @@
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <img src="{{ asset('img/'. auth()->user()->profile_picture) }}" alt="Profile" class="rounded-circle" width="30"
-                            height="30">
+                        <img src="{{ auth()->user()->profile_picture ? asset('img/'. auth()->user()->profile_picture) : asset('img/default-profile.png') }}"
+                        alt="Profile" class="rounded-circle" width="30" height="30">
                         <span style="margin-left: 5px">
                             {{ auth()->user()->name }}
                         </span>
@@ -46,18 +46,6 @@
                 <i class="fas fa-home me-2"></i> Home
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link position-relative {{ request()->routeIs('notification') ? 'active' : '' }}"
-                href="{{ route('notification') }}">
-                <i class="fas fa-bell me-2"></i> Notifications
-                {{-- @if(auth()->user()->unreadNotifications()->count() > 0)
-                <span class="top-0 badge bg-danger position-absolute start-100 translate-middle rounded-pill">
-                    {{ auth()->user()->unreadNotifications()->count() }}
-                </span>
-                @endif --}}
-            </a>
-        </li>
-
         @if (auth()->user()->isAdmin)
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.books') ? 'active' : '' }}" href="{{ route('admin.books') }}">
@@ -75,6 +63,17 @@
             </a>
         </li>
         @else
+        <li class="nav-item">
+            <a class="nav-link position-relative {{ request()->routeIs('notification') ? 'active' : '' }}"
+                href="{{ route('notification') }}">
+                <i class="fas fa-bell me-2"></i> Notifications
+                {{-- @if(auth()->user()->unreadNotifications()->count() > 0)
+                <span class="top-0 badge bg-danger position-absolute start-100 translate-middle rounded-pill">
+                    {{ auth()->user()->unreadNotifications()->count() }}
+                </span>
+                @endif --}}
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('search') ? 'active' : '' }}" href="{{ route('search') }}">
                 <i class="fas fa-search me-2"></i> Search

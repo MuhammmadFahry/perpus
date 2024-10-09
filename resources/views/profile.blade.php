@@ -9,7 +9,8 @@
                 </div>
                 <div class="profile-body d-flex flex-column align-items-center">
                     <div class="profile-avatar mb-3">
-                        <img src="{{ asset('img/'. auth()->user()->profile_picture) }}" alt="Profile Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                        <img src="{{ auth()->user()->profile_picture ? asset('img/' . auth()->user()->profile_picture) : asset('img/default-profile.png') }}"
+     alt="Profile Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
                     </div>
                     <div class="profile-info text-center">
                         <h2 class="mb-3">Selamat datang, <strong>{{ auth()->user()->name }}</strong></h2>

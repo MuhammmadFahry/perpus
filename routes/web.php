@@ -13,9 +13,7 @@ Route::get('/', function () {
     return view('Home');
 })->middleware('auth')->name('Home');
 
-Route::get('/library', function () {
-    return view('library');
-});
+Route::get('/library', [BookController::class, "index"])->name('library');
 
 Route::get('/team', function () {
     return view('team');
