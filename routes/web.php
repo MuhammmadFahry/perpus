@@ -6,9 +6,12 @@ use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\DendaController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('Home');
@@ -35,19 +38,18 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/peminjaman', [PageController::class, 'peminjaman'])->name('peminjaman');
-Route::get('/pengembalian', [PageController::class, 'pengembalian'])->name('pengembalian');
+Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 Route::get('/notification', [PageController::class, 'notification'])->name('notification');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile')->middleware('auth');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/books', [AdminController::class, 'manageBooks'])->name('admin.books');
-Route::get('/admin/penalties', [AdminController::class, 'managePenalties'])->name('admin.penalties');
+Route::get('/admin/penalties', [DendaController::class, 'showFineSettings'])->name('admin.penalties');
 Route::get('/admin/borrow-history', [AdminController::class, 'borrowHistory'])->name('admin.borrowHistory');
 Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('admin.superadmin');
-    Route::post('/superadmin/add-admin', [SuperAdminController::class, 'addAdmin'])->name('superadmin.addAdmin');
-
-
-
+Route::post('/superadmin/add-admin', [SuperAdminController::class, 'addAdmin'])->name('superadmin.addAdmin');
+Route::get('/settings/fines', [DendaController::class, 'showFineSettings'])->name('admin.penalties');
+Route::post('/settings/fines', [DendaController::class, 'saveFineSettings'])->name('admin.penalties.save');
 
 Route::middleware('auth')->group(function () {
     // Route for viewing borrowed books
@@ -73,6 +75,7 @@ Route::resource('books', BookController::class);
 
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 
+Route::get('/search/result', [SearchController::class, 'search'])->name('search.submit');
 
 // Route to display notifications for both admin and regular users
 Route::middleware('auth')->group(function () {

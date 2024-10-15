@@ -32,6 +32,7 @@ class SuperAdminController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => 'admin', // Atur role sebagai admin
+            'isAdmin' => 1,
         ]);
 
         return redirect()->route('admin.superadmin')->with('success', 'Admin berhasil ditambahkan');

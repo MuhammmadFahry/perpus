@@ -21,11 +21,6 @@ class PageController extends Controller
         return view('peminjaman');
     }
 
-    public function pengembalian()
-    {
-        return view('pengembalian');
-    }
-
     public function notification()
     {
         return view('notification');
