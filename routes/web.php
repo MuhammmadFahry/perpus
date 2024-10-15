@@ -8,6 +8,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SuperAdminController;
 
 Route::get('/', function () {
     return view('Home');
@@ -42,6 +43,10 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/books', [AdminController::class, 'manageBooks'])->name('admin.books');
 Route::get('/admin/penalties', [AdminController::class, 'managePenalties'])->name('admin.penalties');
 Route::get('/admin/borrow-history', [AdminController::class, 'borrowHistory'])->name('admin.borrowHistory');
+Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('admin.superadmin');
+    Route::post('/superadmin/add-admin', [SuperAdminController::class, 'addAdmin'])->name('superadmin.addAdmin');
+
+
 
 
 Route::middleware('auth')->group(function () {
@@ -64,6 +69,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('books', BookController::class);
+// routes/web.php
+
+Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
+
 
 // Route to display notifications for both admin and regular users
 Route::middleware('auth')->group(function () {

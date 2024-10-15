@@ -9,12 +9,10 @@
         @foreach($books as $book)
         <div class="col-md-3">
             <div class="card mb-4">
-                <img class="card-img-top" src="{{ asset($book->image) }}" alt="Book Cover" style="max-height: 200px;">
+                <img class="card-img-top" src="{{ asset($book->image) }}" alt="Book Cover" style="max-height: 500px;">
                 <div class="card-body">
                     <h5 class="card-title">{{ $book->title }}</h5>
-                    <p class="card-text">{{ $book->author }}</p>
-                    <p>{{ $book->publication_year }}</p>
-                    <p>{{ ucfirst($book->category) }}</p>
+                    <a href="{{ route('books.show', $book->id ) }}"class="btn btn-primary">show details</a>
                 </div>
             </div>
         </div>

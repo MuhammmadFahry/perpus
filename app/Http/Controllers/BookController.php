@@ -8,86 +8,115 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
+    // Show list of books
     public function index()
     {
-        $books = Book::paginate(8); // Pagination with 8 books per page
+        $books = Book::paginate(8);
         return view('library', compact('books'));
     }
 
-    public function create()
-    {
-        return view('books.create');
-    }
-
+    // Store new book
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'publication_year' => 'required|integer',
             'category' => 'required|string',
-            'image' => 'nullable|image',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $book = new Book($request->all());
-
         if ($request->hasFile('image')) {
+            // $imagePath = $request->file('image')->store('book_covers', 'public');
             $imageName = time() . "-" . str()->random() . '.' . $request->file('image')->extension();
-                $request->image->move(public_path('img/books-cover'), $imageName);
-            $book->image = 'img/books-cover/'. $imageName;
+            $request->image->move(public_path('img/books-cover'), $imageName);
+            $imagePath = 'img/books-cover/'. $imageName;
+        } else {
+            $imagePath = null;
         }
 
-        $book->save();
+        Book::create([
+            'title' => $validated['title'],
+            'author' => $validated['author'],
+            'publication_year' => $validated['publication_year'],
+            'category' => $validated['category'],
+            'description' => $validated['description'],
+            'image' => $imagePath,
+        ]);
 
-        return redirect()->route('library')->with('success', 'Buku berhasil ditambahkan!');
+        return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan.');
     }
 
-    public function show(Book $book)
+    // Show edit form
+    public function edit($id)
     {
-        return view('books.show', compact('book'));
-    }
-
-    public function edit(Book $book)
-    {
+        $book = Book::findOrFail($id);
         return view('books.edit', compact('book'));
     }
 
-    public function update(Request $request, Book $book)
+    // Update book
+    public function update(Request $request, $id)
     {
-        $request->validate([
+        $book = Book::findOrFail($id);
+
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'publication_year' => 'required|integer',
             'category' => 'required|string',
-            'image' => 'nullable|image',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $book->title = $request->input('title');
-        $book->author = $request->input('author');
-        $book->publication_year = $request->input('publication_year');
-        $book->category = $request->input('category');
-
         if ($request->hasFile('image')) {
-            // Delete old image
+            // Delete old image if exists
+            if ($book->image) {
+                Storage::disk('public')->delete($book->image);
+            }
+            // $imagePath = $request->file('image')->store('book_covers', 'public');
             $imageName = time() . "-" . str()->random() . '.' . $request->file('image')->extension();
             $request->image->move(public_path('img/books-cover'), $imageName);
-            $book->image = 'img/books-cover/'. $imageName;
-
+            $imagePath = 'img/books-cover/'. $imageName;
+        } else {
+            $imagePath = $book->image;
         }
-        // $book->update($request->all());
-        $book->save();
 
-        return redirect()->route('library')->with('success', 'Buku berhasil diupdate!');
+        $book->update([
+            'title' => $validated['title'],
+            'author' => $validated['author'],
+            'publication_year' => $validated['publication_year'],
+            'category' => $validated['category'],
+            'description' => $validated['description'],
+            'image' => $imagePath,
+        ]);
+
+        return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui.');
     }
 
-    public function destroy(Book $book)
+    // Delete book
+    public function destroy($id)
     {
+        $book = Book::findOrFail($id);
+
         if ($book->image) {
-            Storage::delete('public/' . $book->image);
+            Storage::disk('public')->delete($book->image);
         }
 
         $book->delete();
 
-        return response()->json(['success' => true, 'message' => 'Buku berhasil dihapus!']);
+        return back()->with('success', 'Buku berhasil dihapus.');
     }
+
+    public function show($id)
+{
+    // Cari buku berdasarkan ID
+    $book = Book::findOrFail($id);
+
+    // Kirim data buku ke view
+    return view('show', compact('book'));
 }
+}
+
+
+

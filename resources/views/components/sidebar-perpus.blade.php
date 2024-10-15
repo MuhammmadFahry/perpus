@@ -53,6 +53,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.superadmin') ? 'active' : '' }}" href="{{ route('admin.superadmin') }}">
+                <i class="fas fa-user-shield me-2"></i> superadmin
+            </a>
+        </li>        
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.penalties') ? 'active' : '' }}" href="{{ route('admin.penalties') }}">
                 <i class="fas fa-money-bill me-2"></i> Denda
             </a>
