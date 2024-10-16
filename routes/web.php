@@ -38,9 +38,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/peminjaman', [PageController::class, 'peminjaman'])->name('peminjaman');
-Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 Route::get('/notification', [PageController::class, 'notification'])->name('notification');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile')->middleware('auth');
+
+Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
+Route::get('/books', [BorrowingController::class, 'index'])->name('peminjaman');
+Route::post('/books/borrow/{id}', [BorrowingController::class, 'borrow'])->name('books.borrow');
+
+// Route::get('pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/books', [AdminController::class, 'manageBooks'])->name('admin.books');

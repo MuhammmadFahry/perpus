@@ -17,4 +17,12 @@ class Book extends Model
         'description',
         'image'
     ];
+
+    public function borrowers()
+{
+    return $this->belongsToMany(User::class, 'borrowings')
+                ->withPivot('borrowed_at', 'return_by')
+                ->withTimestamps();
+}
+
 }

@@ -1,48 +1,55 @@
 <?php
 
-// BorrowingController.php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Book;
 use App\Models\Borrowing;
-use App\Models\Setting;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class BorrowingController extends Controller
+class BorrowingController   extends Controller
 {
-    public function returnBook($id)
+    // Menampilkan daftar buku yang tersedia untuk dipinjam
+    public function index()
     {
-        $borrowing = BorrowingController::findOrFail($id);
+        // Menampilkan hanya buku yang available
+        $books = Book::where('available', true)->get();
+        return view('peminjaman', compact('books'));
+    }
 
-        // Ambil pengaturan jumlah denda per hari
-        $fineAmount = Setting::where('key', 'fine_amount')->value('value');
-        
-        // Tanggal pengembalian
-        $returnedAt = Carbon::now();
-        $borrowedAt = Carbon::parse($borrowing->borrowed_at);
-
-        // Misalkan masa pinjam 7 hari
-        $allowedDays = 7;
-
-        // Hitung keterlambatan
-        $dueDate = $borrowedAt->addDays($allowedDays);
-        $lateDays = $returnedAt->diffInDays($dueDate, false); // false untuk menghitung keterlambatan
-
-        // Jika terlambat, hitung denda
-        $fine = 0;
-        if ($lateDays > 0) {
-            $fine = $lateDays * $fineAmount; // Denda dihitung berdasarkan jumlah hari terlambat
+    // Proses peminjaman buku
+    public function borrow(Request $request, $book_id)
+    {
+        // Cek apakah buku tersedia
+        $book = Book::findOrFail($book_id);
+        if (!$book->available) {
+            // Redirect dengan pesan error jika buku sedang dipinjam
+            return redirect()->back()->with('error', 'Buku ini sedang dipinjam.');
         }
 
-        // Update status peminjaman
-        $borrowing->update([
-            'returned_at' => $returnedAt,
-            'fine' => $fine,
-            'status' => 'returned',
+        // Simpan peminjaman
+        Borrowing::create([
+            'user_id' => Auth::id(),
+            'book_id' => $book_id,
+            'borrowed_at' => now(),
+            'returned_at' => $request->return_date,
+            'status' => 'borrowed',
+            'fine' => 0,
         ]);
 
-        return redirect()->route('pengembalian')->with('success', 'Buku berhasil dikembalikan. Denda: Rp ' . $fine);
+        // Update status buku menjadi tidak tersedia
+        $book->update(['available' => false]);
+
+        // Redirect dengan pesan sukses jika peminjaman berhasil
+        return redirect()->back()->with('success', 'Peminjaman buku berhasil.');
     }
+
+    public function showBorrowedBooks()
+{
+    $user = Auth::user();
+    $borrowedBooks = $user->borrowedBooks;  // Retrieve borrowed books with pivot data
+
+    return view('borrowed-books', compact('borrowedBooks'));
 }
 
+}

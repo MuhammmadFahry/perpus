@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Borrowing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
     // Method to show borrowed books
     public function borrowed()
     {
-        $borrowedBooks = auth()->user()->borrowedBooks; // Assuming the relationship exists
-        return view('borrowed', compact('borrowedBooks'));
+        //$borrowedBooks = auth()->user()->borrowedBooks; // Assuming the relationship exists
+        $id_user = Auth::user()->id;
+        return view('borrowed', [
+            'borrowedBooks' => Borrowing::where('user_id', $id_user)->get()
+        ]);
     }
 
     // Method to show borrowing history

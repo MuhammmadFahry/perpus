@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -18,7 +19,9 @@ class PageController extends Controller
 
     public function peminjaman()
     {
-        return view('peminjaman');
+        return view('peminjaman', [
+            'books' => Book::all()
+        ]);
     }
 
     public function notification()
@@ -39,6 +42,4 @@ class PageController extends Controller
 
         return view('profile', compact('nama', 'email'));
     }
-
 }
-

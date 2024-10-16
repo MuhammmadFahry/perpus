@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->string('category');
             $table->text('description')->nullable(); // Kolom deskripsi
             $table->string('image')->nullable(); // Kolom untuk cover buku
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }
