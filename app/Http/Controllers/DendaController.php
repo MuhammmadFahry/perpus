@@ -15,7 +15,7 @@ class DendaController extends Controller
         // Ambil pengaturan jumlah denda saat ini dari tabel 'settings'
         $fineAmount = Setting::where('key', 'fine_amount')->first();
         if(!$fineAmount) return abort(404, 'Data fine amount gak ada fahri, tambahin dulu');
-        
+
         return view('admin.penalties', [
             'fineAmount' => $fineAmount->value
         ]);

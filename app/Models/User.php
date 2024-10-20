@@ -49,11 +49,14 @@ class User extends Authenticatable
     }
 
     public function borrowedBooks()
-{
-    return $this->belongsToMany(Book::class, 'borrowings')
-                ->withPivot('borrowed_at', 'return_by')
-                ->withTimestamps();
-}
+    {
+        return $this->belongsToMany(Book::class, 'borrowings', 'user_id', 'book_id')
+            ->withPivot('borrowed_at', 'returned_at')
+            ->withTimestamps();
+    }
 
+    public function historybooks()
+    {
+        return $this->belongsToMany(Book::class, 'historybooks', 'user_id', 'book_id');
+    }
 }
-

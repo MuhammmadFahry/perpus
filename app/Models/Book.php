@@ -19,10 +19,14 @@ class Book extends Model
     ];
 
     public function borrowers()
-{
-    return $this->belongsToMany(User::class, 'borrowings')
-                ->withPivot('borrowed_at', 'return_by')
-                ->withTimestamps();
-}
+    {
+        return $this->belongsToMany(User::class, 'borrowing', 'book_id', 'user_id')
+            ->withPivot('borrowed_at', 'returned_at')
+            ->withTimestamps();
+    }
 
+    public function historybooks()
+    {
+        return $this->hasMany(Historybooks::class, 'book_id');
+    }
 }

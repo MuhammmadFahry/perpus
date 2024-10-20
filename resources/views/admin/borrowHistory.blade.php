@@ -21,18 +21,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Buku A</td>
-                                <td>User 1</td>
-                                <td>01/09/2024</td>
-                                <td>15/09/2024</td>
-                            </tr>
-                            <tr>
-                                <td>Buku B</td>
-                                <td>User 2</td>
-                                <td>02/09/2024</td>
-                                <td>16/09/2024</td>
-                            </tr>
+                            @foreach($historysemuanya as $history)
+                                <tr>
+                                    <td>{{ $history->book->title }}</td>
+                                    <td>{{ $history->user->name }}</td>
+                                    <td>{{ $history->tanggal_dipinjam }}</td>
+                                    <td>{{ $history->created_at->format('d M Y') }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

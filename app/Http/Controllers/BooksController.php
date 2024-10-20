@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Borrowing;
+use App\Models\Historybooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,8 +22,10 @@ class BooksController extends Controller
     // Method to show borrowing history
     public function history()
     {
-        $historyBooks = auth()->user()->historyBooks; // Assuming the relationship exists
-        return view('history', compact('historyBooks'));
+        $historyBooks = Historybooks::where('user_id', Auth::id())->get(); // Assuming the relationship exists
+        return view('history', [
+            'historyBooks' => $historyBooks
+        ]);
     }
 
     // Method to show edit profile form

@@ -12,6 +12,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HistorybooksController;
+use App\Models\Historybooks;
 
 Route::get('/', function () {
     return view('Home');
@@ -40,7 +42,6 @@ Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/peminjaman', [PageController::class, 'peminjaman'])->name('peminjaman');
 Route::get('/notification', [PageController::class, 'notification'])->name('notification');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile')->middleware('auth');
-
 Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 Route::get('/books', [BorrowingController::class, 'index'])->name('peminjaman');
 Route::post('/books/borrow/{id}', [BorrowingController::class, 'borrow'])->name('books.borrow');
@@ -50,7 +51,7 @@ Route::post('/books/borrow/{id}', [BorrowingController::class, 'borrow'])->name(
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/books', [AdminController::class, 'manageBooks'])->name('admin.books');
 Route::get('/admin/penalties', [DendaController::class, 'showFineSettings'])->name('admin.penalties');
-Route::get('/admin/borrow-history', [AdminController::class, 'borrowHistory'])->name('admin.borrowHistory');
+Route::get('/admin/borrow-history', [HistorybooksController::class, 'historypeminjamansemuauser'])->name('admin.borrowHistory');
 Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('admin.superadmin');
 Route::post('/superadmin/add-admin', [SuperAdminController::class, 'addAdmin'])->name('superadmin.addAdmin');
 Route::get('/settings/fines', [DendaController::class, 'showFineSettings'])->name('admin.penalties');
@@ -86,3 +87,5 @@ Route::get('/search/result', [SearchController::class, 'search'])->name('search.
 Route::middleware('auth')->group(function () {
     Route::get('/notification', [NotificationController::class, 'showNotifications'])->name('notification');
 });
+
+Route::post('/tambah/historybook', [HistorybooksController::class, 'tambahhistorybook'])->name('tambah.historybook');

@@ -52,4 +52,12 @@ class BorrowingController   extends Controller
     return view('borrowed-books', compact('borrowedBooks'));
 }
 
+public function pengembalian()
+{
+    $buku_yang_dipinjams = Borrowing::where("user_id",Auth::id())->get();
+    return view('pengembalian',[
+        "buku_yang_dipinjams"=>$buku_yang_dipinjams
+    ]);
+}
+
 }
