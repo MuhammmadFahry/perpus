@@ -34,7 +34,7 @@ class BorrowingController   extends Controller
             'borrowed_at' => now(),
             'returned_at' => $request->return_date,
             'status' => 'borrowed',
-            'fine' => 0,
+            // 'fine' => 0,
         ]);
 
         // Update status buku menjadi tidak tersedia

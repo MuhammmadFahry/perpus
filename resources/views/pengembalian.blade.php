@@ -10,34 +10,39 @@
             width: 100%;
             margin-bottom: 1rem;
             color: #212529;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            border-collapse: collapse;
         }
 
         .table thead th {
             background-color: #343a40;
             color: #fff;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
+            border: 1px solid #dee2e6;
         }
 
         .table tbody td {
             vertical-align: middle;
             text-align: center;
             padding: 8px;
+            border: 1px solid #dee2e6;
         }
 
         .book-image {
-            width: 80px;
+            width: 60px;
             height: auto;
             border-radius: 5px;
+            border: 1px solid #ced4da;
         }
 
         .btn-primary {
             background-color: #28a745;
             border-color: #28a745;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.85em;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin: 0;
         }
 
         .btn-primary:hover {
@@ -46,27 +51,34 @@
         }
 
         .alert {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            padding: 8px 12px;
         }
 
         .table-responsive {
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .return-date {
-            width: 150px;
-            padding: 5px;
-            border-radius: 5px;
+            width: 130px;
+            padding: 4px;
+            border-radius: 4px;
             border: 1px solid #ced4da;
         }
 
+        /* Responsif di layar kecil */
         @media (max-width: 768px) {
             .book-image {
-                width: 60px;
+                width: 50px;
             }
 
             .table {
-                font-size: 0.85em;
+                font-size: 0.75em;
+            }
+
+            .btn-primary {
+                padding: 4px 6px;
+                font-size: 0.75em;
             }
         }
     </style>
@@ -94,7 +106,7 @@
         @endif
 
         {{-- Cek apakah ada buku yang tersedia --}}
-        @if (count($buku_yang_dipinjams) ==  0)
+        @if (count($buku_yang_dipinjams) == 0)
             <div class="alert alert-info text-center">Tidak ada buku yang tersedia saat ini untuk dikembalikan.</div>
         @else
             <div class="table-responsive">
@@ -123,7 +135,7 @@
                                     <td>{{ $buku_yang_dipinjam->book->author }}</td>
                                     <td>{{ $buku_yang_dipinjam->denda }}</td>
                                     <td>
-                                        {{-- Form untuk meminjam buku --}}
+                                        {{-- Tombol untuk mengembalikan buku --}}
                                         <button type="submit" class="btn btn-primary">Kembalikan</button>
                                     </td>
                                 </tr>

@@ -119,11 +119,17 @@
                                     </td>
                                     <td>{{ $book->title }}</td>
                                     <td>{{ $book->author }}</td>
-                                    <td>
-                                        {{-- Input untuk tanggal pengembalian --}}
-                                        <input type="date" name="return_date" class="return-date"
-                                            form="borrow-form-{{ $book->id }}" required>
-                                    </td>
+                                    @php
+                                    // Menggunakan Carbon untuk menghitung 7 hari ke depan tanpa 'use' statement
+                                    $defaultReturnDate = \Carbon\Carbon::now()->addDays(7)->format('Y-m-d');
+                                @endphp
+
+                                <td>
+                                    {{-- Input untuk tanggal pengembalian dengan default 7 hari ke depan --}}
+                                    <input hidden type="date" name="return_date" class="return-date" value="{{ $defaultReturnDate }}" required>
+                                    <input disabled type="date"class="return-date" value="{{ $defaultReturnDate }}">
+                                </td>
+
                                     <td>
                                         {{-- Form untuk meminjam buku --}}
                                         @csrf

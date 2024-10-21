@@ -20,7 +20,7 @@ class CreateBorrowingsTable extends Migration
             $table->timestamp('borrowed_at'); // Tanggal peminjaman
             $table->timestamp('returned_at')->nullable(); // Tanggal pengembalian
             $table->enum('status', ['borrowed', 'returned', 'late']); // Status peminjaman
-            $table->decimal('fine', 8, 2)->default(0); // Denda jika terlambat
+            $table->decimal('fine')->default(0); // Denda jika terlambat
             $table->integer('denda')->default(0);
             $table->timestamps();
 
