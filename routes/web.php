@@ -13,6 +13,7 @@ use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HistorybooksController;
+use App\Models\Borrowing;
 use App\Models\Historybooks;
 
 Route::get('/', function () {
@@ -28,6 +29,12 @@ Route::get('/team', function () {
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+
+Route::get('/payment/{id}', function ($id) {
+    $buku_yang_dipinjam = Borrowing::where('id',$id )->first();
+    return view('payment', ['buku_yang_dipinjam' => $buku_yang_dipinjam]);
+})->name('payment');
+
 
 Route::post('/login', [AuthController::class, "login"]);
 
@@ -89,3 +96,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/tambah/historybook', [HistorybooksController::class, 'tambahhistorybook'])->name('tambah.historybook');
+
+Route::post('/get-snap-token', [BorrowingController::class, 'createTransaction']);
+Route::post('/midtrans/notification', [BorrowingController::class, 'handleNotification']);
+

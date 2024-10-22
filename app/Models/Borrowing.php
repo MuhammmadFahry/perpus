@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,5 +36,21 @@ class Borrowing extends Model
     {
         return $this->belongsTo(User::class);
     }
-}
 
+    public function getDendaAttribute()
+    {
+        $deadline = $this->returned_at;
+        $today = Carbon::now();
+        $fine = 0;
+        $dendas = Setting::where('key', 'fine_amount')->get();
+        foreach ($dendas as $denda) {
+            $fine = $denda->value;
+        }
+        if ($today->greaterThan($deadline)) {
+            $lateDays = $today->diffInDays($deadline);
+            return $fine + ($fine * (floor(-($lateDays))-1));
+        }
+
+        return 0;
+    }
+}
