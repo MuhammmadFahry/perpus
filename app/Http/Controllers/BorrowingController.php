@@ -88,7 +88,7 @@ class BorrowingController extends Controller
             $params = [
                 'transaction_details' => [
                     'order_id' => uniqid(),
-                    'gross_amount' => $borrowing->fine, // Jumlah denda
+                    'gross_amount' => $borrowing->denda, // Jumlah denda
                 ],
                 'customer_details' => [
                     'first_name' => Auth::user()->name,
@@ -101,7 +101,7 @@ class BorrowingController extends Controller
                 $snapToken = Snap::getSnapToken($params);
 
                 // Pastikan ini mengarah ke view yang benar
-                return view('payment', ['snap_token' => $snapToken, 'fine' => $borrowing->fine]);
+                return view('payment', ['snap_token' => $snapToken, 'fine' => $borrowing->denda]);
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Gagal memproses pembayaran.');
             }

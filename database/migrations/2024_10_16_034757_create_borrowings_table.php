@@ -22,6 +22,7 @@ class CreateBorrowingsTable extends Migration
             $table->enum('status', ['borrowed', 'returned', 'late']); // Status peminjaman
             $table->decimal('fine')->default(0); // Denda jika terlambat
             $table->integer('denda')->default(0);
+            $table->string('order_id')->nullable();
             $table->timestamps();
 
             // Foreign key constraint

@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         Setting::create(
             [
                 "key" => "fine_amount",
-                "value" => 0,
+                "value" => 5000,
             ]
         );
 

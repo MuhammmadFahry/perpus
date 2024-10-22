@@ -24,10 +24,10 @@ class PageController extends Controller
         ]);
     }
 
-    public function notification()
-    {
-        return view('notification');
-    }
+    // public function notification()
+    // {
+    //     return view('notification');
+    // }
     public function profile()
     {
         $user = auth()->user();

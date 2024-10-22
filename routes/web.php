@@ -15,6 +15,8 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HistorybooksController;
 use App\Models\Borrowing;
 use App\Models\Historybooks;
+use Illuminate\Support\Facades\Auth;
+use Midtrans\Snap;
 
 Route::get('/', function () {
     return view('Home');
@@ -31,8 +33,50 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/payment/{id}', function ($id) {
-    $buku_yang_dipinjam = Borrowing::where('id',$id )->first();
-    return view('payment', ['buku_yang_dipinjam' => $buku_yang_dipinjam]);
+    $buku_yang_dipinjam = Borrowing::where('id', $id)->first();
+
+    // Jika tidak ditemukan, kembalikan dengan pesan error
+    if (!$buku_yang_dipinjam) {
+        return redirect()->back()->with('error', 'Data peminjaman tidak ditemukan.');
+    }
+
+    // Buat order_id yang unik jika belum ada
+    if ($buku_yang_dipinjam->order_id == null || Borrowing::where('order_id', $buku_yang_dipinjam->order_id)->exists()) {
+        do {
+            $buku_yang_dipinjam->order_id = 'order-' . uniqid() . '-' . $buku_yang_dipinjam->id;
+        } while (Borrowing::where('order_id', $buku_yang_dipinjam->order_id)->exists());
+        $buku_yang_dipinjam->save();
+    }
+
+    // Konfigurasi Midtrans
+    \Midtrans\Config::$serverKey = config('midtrans.server_key');
+    \Midtrans\Config::$isProduction = config('midtrans.is_production');
+    \Midtrans\Config::$isSanitized = true;
+    \Midtrans\Config::$is3ds = true;
+
+    // Data transaksi
+    $params = [
+        'transaction_details' => [
+            'order_id' => $buku_yang_dipinjam->order_id,
+            'gross_amount' => $buku_yang_dipinjam->denda, // Jumlah denda
+        ],
+        'customer_details' => [
+            'first_name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+        ],
+        'callbacks' => [
+            'finish' => url('/payment/success') // URL setelah selesai pembayaran
+        ],
+    ];
+
+    // Buat Snap Token dari Midtrans
+    $snapToken = Snap::getSnapToken($params);
+
+    // Return view pembayaran dengan snap token
+    return view('payment', [
+        'snap_token' => $snapToken,
+        'buku_yang_dipinjam' => $buku_yang_dipinjam
+    ]);
 })->name('payment');
 
 
@@ -47,7 +91,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/peminjaman', [PageController::class, 'peminjaman'])->name('peminjaman');
-Route::get('/notification', [PageController::class, 'notification'])->name('notification');
+// Route::get('/notification', [PageController::class, 'notification'])->name('notification');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile')->middleware('auth');
 Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 Route::get('/books', [BorrowingController::class, 'index'])->name('peminjaman');
@@ -91,12 +135,16 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 Route::get('/search/result', [SearchController::class, 'search'])->name('search.submit');
 
 // Route to display notifications for both admin and regular users
-Route::middleware('auth')->group(function () {
-    Route::get('/notification', [NotificationController::class, 'showNotifications'])->name('notification');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/notification', [NotificationController::class, 'showNotifications'])->name('notification');
+// });
 
 Route::post('/tambah/historybook', [HistorybooksController::class, 'tambahhistorybook'])->name('tambah.historybook');
 
 Route::post('/get-snap-token', [BorrowingController::class, 'createTransaction']);
 Route::post('/midtrans/notification', [BorrowingController::class, 'handleNotification']);
+
+
+
+
 

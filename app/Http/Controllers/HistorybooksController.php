@@ -11,12 +11,14 @@ class HistorybooksController extends Controller
 {
     public function tambahhistorybook(Request $request)
     {
+        // dd('berhasil', $request->all());
         Historybooks::create([
             'user_id'=> Auth::id(),
             'book_id'=> $request->book_id,
             'tanggal_dipinjam' => $request->tanggal_dipinjam
         ]);
-        $buku_yang_dipinjam = Borrowing::where('book_id', $request->book_id)->where('user_id', Auth::id())->first();
+        // $buku_yang_dipinjam = Borrowing::where('book_id', $request->book_id)->where('user_id', Auth::id())->first();
+        $buku_yang_dipinjam = Borrowing::where('id', $request->id)->where('user_id', Auth::id())->first();
         $buku_yang_dipinjam->delete();
         return redirect()->back();
     }
