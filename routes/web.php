@@ -79,6 +79,8 @@ Route::get('/payment/{id}', function ($id) {
     ]);
 })->name('payment');
 
+Route::get('/payment/success/{id}', [BorrowingController::class, 'success'])->name('success');
+
 
 Route::post('/login', [AuthController::class, "login"]);
 
@@ -91,7 +93,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/peminjaman', [PageController::class, 'peminjaman'])->name('peminjaman');
-// Route::get('/notification', [PageController::class, 'notification'])->name('notification');
+Route::get('/notification', [PageController::class, 'notification'])->name('notification');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile')->middleware('auth');
 Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 Route::get('/books', [BorrowingController::class, 'index'])->name('peminjaman');
@@ -135,9 +137,9 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 Route::get('/search/result', [SearchController::class, 'search'])->name('search.submit');
 
 // Route to display notifications for both admin and regular users
-// Route::middleware('auth')->group(function () {
-//     Route::get('/notification', [NotificationController::class, 'showNotifications'])->name('notification');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/notification', [NotificationController::class, 'showNotifications'])->name('notification');
+});
 
 Route::post('/tambah/historybook', [HistorybooksController::class, 'tambahhistorybook'])->name('tambah.historybook');
 

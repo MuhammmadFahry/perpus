@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Borrowing;
+use App\Models\Historybooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
@@ -125,5 +126,18 @@ class BorrowingController extends Controller
         }
 
         return response()->json(['message' => 'Tidak ada tindakan yang diperlukan.']);
+    }
+
+    public function success($id) {
+        $borrowing = Borrowing::where('id', $id)->where('user_id', Auth::id())->first();
+
+        Historybooks::create([
+            'user_id'=> Auth::id(),
+            'book_id'=> $borrowing->book_id,
+            'tanggal_dipinjam' => $borrowing->borrowed_at
+        ]);
+
+        $borrowing->delete();
+        return redirect()->route('Home');
     }
 }

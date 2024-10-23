@@ -68,7 +68,7 @@
             </a>
         </li>
         @else
-        {{-- <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link position-relative {{ request()->routeIs('notification') ? 'active' : '' }}"
                 href="{{ route('notification') }}">
                 <i class="fas fa-bell me-2"></i> Notifications
@@ -77,8 +77,8 @@
                     {{ auth()->user()->unreadNotifications()->count() }}
                 </span>
                 @endif --}}
-            {{-- </a>
-        </li> --}}
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('search') ? 'active' : '' }}" href="{{ route('search') }}">
                 <i class="fas fa-search me-2"></i> Search
