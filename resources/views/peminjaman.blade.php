@@ -122,7 +122,7 @@
                                     @php
                                         // Menggunakan Carbon untuk menghitung 7 hari ke depan tanpa 'use' statement
                                         $defaultReturnDate = \Carbon\Carbon::now()
-                                            ->addDays(7)
+                                            ->addDays(-7)
                                             ->format('Y-m-d');
                                     @endphp
 
@@ -156,6 +156,19 @@
             text: '{{ session('success') }}',
             icon: 'success',
             confirmButtonText: 'NICE'
+        })
+        @endif
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
+        @if (Session::has('error'))
+        Swal.fire({
+            title: 'Error',
+            text: '{{ session('error') }}',
+            icon: 'error',
+            confirmButtonText: 'OK'
         })
         @endif
     </script>
