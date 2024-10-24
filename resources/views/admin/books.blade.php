@@ -4,12 +4,12 @@
 <div class="container">
     <!-- Custom Alert -->
     <div id="customAlert" class="alert" style="display:none;"></div>
-    @if (Session::has('success'))
+    {{-- @if (Session::has('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Success</strong> {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    @endif
+    @endif --}}
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4>Pengelolaan Buku</h4>
@@ -155,12 +155,12 @@
                                     <button type="button" class="btn btn-secondary" id="cancelBookForm">Batal</button>`)
                                     resetForm();
                                 });
-                                
+
                                 $('#cancelBookForm').click(function() {
                                     $('#bookFormContainer').hide();
                                     resetForm();
                                 });
-                                
+
                                 function resetForm() {
                                     $('#bookId').val('');
                                     $('#title').val('');
@@ -170,7 +170,7 @@
                                     $('#description').val('');
                                     $('#image').val('');
                                 }
-                                
+
                                 // // Show book details in modal when a book card is clicked
                                 // $('.book-card').click(function() {
     //     const bookTitle = $(this).data('title');
@@ -179,7 +179,7 @@
     //     const bookCategory = $(this).data('category');
     //     const bookDescription = $(this).data('description');
     //     const bookImage = $(this).data('image');
-    
+
     //     // Set modal content
     //     $('#modalBookTitle').text(bookTitle);
     //     $('#modalBookAuthor').text('Pengarang: ' + bookAuthor);
@@ -187,11 +187,11 @@
     //     $('#modalBookCategory').text('Kategori: ' + bookCategory.charAt(0).toUpperCase() + bookCategory.slice(1));
     //     $('#modalBookDescription').text(bookDescription);
     //     $('#modalBookImage').attr('src', bookImage);
-    
+
     //     // Show the modal
     //     $('#bookDetailModal').modal('show');
     // });
-    
+
     // Handle edit book button
     $('.editBookBtn').click(function() {
         const bookId = $(this).data('id');
@@ -200,7 +200,7 @@
         const year = $(this).data('year');
         const category = $(this).data('category');
         const description = $(this).data('description');
-        
+
         $('#bookFormContainer').toggle();
         $('#bookForm').attr('action', `/books/${bookId}`);
 
@@ -243,3 +243,17 @@
     // resetForm();
 </script>
 @endsection
+
+
+@push('scripts')
+    <script>
+        @if (Session::has('success'))
+        Swal.fire({
+            title: 'Success',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'Nice'
+        })
+        @endif
+    </script>
+@endpush

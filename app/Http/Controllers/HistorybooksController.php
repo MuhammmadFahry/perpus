@@ -20,7 +20,7 @@ class HistorybooksController extends Controller
         // $buku_yang_dipinjam = Borrowing::where('book_id', $request->book_id)->where('user_id', Auth::id())->first();
         $buku_yang_dipinjam = Borrowing::where('id', $request->id)->where('user_id', Auth::id())->first();
         $buku_yang_dipinjam->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success','pengembalian berhasil');
     }
 
     public function historypeminjamansemuauser(Request $request)

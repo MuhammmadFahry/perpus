@@ -75,7 +75,7 @@
         <h4 class="text-center mb-4">Daftar Buku yang Tersedia untuk Dipinjam</h4>
 
         {{-- Pesan notifikasi jika ada --}}
-        @if (session('success'))
+        {{-- @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -91,7 +91,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        @endif
+        @endif --}}
 
         {{-- Cek apakah ada buku yang tersedia --}}
         @if ($books->isEmpty())
@@ -147,3 +147,16 @@
         @endif
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        @if (Session::has('success'))
+        Swal.fire({
+            title: 'Success',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'NICE'
+        })
+        @endif
+    </script>
+@endpush

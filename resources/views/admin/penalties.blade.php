@@ -9,7 +9,7 @@
                     <h4>Pengaturan Denda</h4>
                 </div>
                 <div class="card-body">
-                    @if(session('success'))
+                    {{-- @if(session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
                         </div>
@@ -17,7 +17,7 @@
                         <div class="alert alert-danger">
                             {{ session('error') }}
                         </div>
-                    @endif
+                    @endif --}}
 
                     <form action="{{ route('admin.penalties.save') }}" method="POST">
                         @csrf
@@ -41,3 +41,16 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        @if (Session::has('success'))
+        Swal.fire({
+            title: 'Success',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'Nice'
+        })
+        @endif
+    </script>
+@endpush

@@ -69,6 +69,8 @@ class BorrowingController extends Controller
         return view('pengembalian', [
             'buku_yang_dipinjams' => $buku_yang_dipinjams
         ]);
+
+        return redirect()->back()->with('success', 'Pengembalian buku berhasil.');
     }
 
     // Proses pengembalian buku atau redirect ke pembayaran jika ada denda
