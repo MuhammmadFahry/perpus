@@ -122,7 +122,7 @@
                                     @php
                                         // Menggunakan Carbon untuk menghitung 7 hari ke depan tanpa 'use' statement
                                         $defaultReturnDate = \Carbon\Carbon::now()
-                                            ->addDays(-7)
+                                            ->addDays(7)
                                             ->format('Y-m-d');
                                     @endphp
 

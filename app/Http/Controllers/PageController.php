@@ -23,11 +23,7 @@ class PageController extends Controller
             'books' => Book::all()
         ]);
     }
-
-    public function notification()
-    {
-        return view('notification');
-    }
+    
     public function profile()
     {
         $user = auth()->user();

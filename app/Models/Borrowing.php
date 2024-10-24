@@ -37,18 +37,36 @@ class Borrowing extends Model
         return $this->belongsTo(User::class);
     }
 
+    public static function hasUnpaidFines($userId)
+    {
+        return self::where('user_id', $userId)
+            ->where('fine', '>', 0)
+            ->where('status', '!=', 'returned') // Buku belum dikembalikan
+            ->exists();
+    }
+
+
     public function getDendaAttribute()
     {
         $deadline = $this->returned_at;
+        // Pastikan $deadline tidak null
+        if (!$deadline) {
+            return 0;
+        }
+
         $today = Carbon::now();
         $fine = 0;
         $dendas = Setting::where('key', 'fine_amount')->get();
+
+        // Pastikan mendapatkan nilai denda
         foreach ($dendas as $denda) {
             $fine = $denda->value;
         }
+
+        // Hitung denda jika sudah melewati deadline
         if ($today->greaterThan($deadline)) {
             $lateDays = $today->diffInDays($deadline);
-            return $fine + ($fine * (floor(-($lateDays))-1));
+            return $fine + ($fine * (floor(- ($lateDays)) - 1));
         }
 
         return 0;

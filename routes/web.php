@@ -8,7 +8,6 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\SearchController;
@@ -93,11 +92,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/peminjaman', [PageController::class, 'peminjaman'])->name('peminjaman');
-Route::get('/notification', [PageController::class, 'notification'])->name('notification');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile')->middleware('auth');
 Route::get('/pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 Route::get('/books', [BorrowingController::class, 'index'])->name('peminjaman');
-Route::post('/books/borrow/{id}', [BorrowingController::class, 'borrow'])->name('books.borrow');
+Route::post('/peminjaman/{book}', [BorrowingController::class, 'borrow'])->name('books.borrow');
+
 
 // Route::get('pengembalian', [BorrowingController::class, 'pengembalian'])->name('pengembalian');
 
@@ -136,10 +135,6 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 
 Route::get('/search/result', [SearchController::class, 'search'])->name('search.submit');
 
-// Route to display notifications for both admin and regular users
-Route::middleware('auth')->group(function () {
-    Route::get('/notification', [NotificationController::class, 'showNotifications'])->name('notification');
-});
 
 Route::post('/tambah/historybook', [HistorybooksController::class, 'tambahhistorybook'])->name('tambah.historybook');
 

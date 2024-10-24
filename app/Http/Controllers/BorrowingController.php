@@ -22,13 +22,33 @@ class BorrowingController extends Controller
     // Proses peminjaman buku
     public function borrow(Request $request, $book_id)
     {
+        $user = Auth::user();
+
+        // Cek apakah user memiliki denda yang belum dibayar atau peminjaman yang belum dikembalikan
+        $unpaidFines = Borrowing::where('user_id', $user->id)
+        // ->where('denda', '>', 0)  // Ada denda yang belum dibayar
+        // ->where('status', 'borrowed')  // Status buku belum dikembalikan
+        ->get();
+        // ->exists();
+        foreach ($unpaidFines as $fine) {
+            if($fine->denda) {
+                return redirect()->back()->with('error', 'Anda tidak dapat meminjam buku karena masih memiliki denda yang belum dibayarkan.');
+            }
+        }
+        // dd('berhasil', $user, $unpaidFines);
+
+        if ($unpaidFines) {
+        }
+
+        // Jika tidak ada denda, lanjutkan peminjaman
         $book = Book::findOrFail($book_id);
+
         if (!$book->available) {
             return redirect()->back()->with('error', 'Buku ini sedang dipinjam.');
         }
 
         Borrowing::create([
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'book_id' => $book_id,
             'borrowed_at' => now(),
             'returned_at' => $request->return_date,
@@ -39,6 +59,7 @@ class BorrowingController extends Controller
 
         return redirect()->back()->with('success', 'Peminjaman buku berhasil.');
     }
+
 
     // Menampilkan buku yang dipinjam oleh user yang login
     public function pengembalian()
@@ -128,12 +149,13 @@ class BorrowingController extends Controller
         return response()->json(['message' => 'Tidak ada tindakan yang diperlukan.']);
     }
 
-    public function success($id) {
+    public function success($id)
+    {
         $borrowing = Borrowing::where('id', $id)->where('user_id', Auth::id())->first();
 
         Historybooks::create([
-            'user_id'=> Auth::id(),
-            'book_id'=> $borrowing->book_id,
+            'user_id' => Auth::id(),
+            'book_id' => $borrowing->book_id,
             'tanggal_dipinjam' => $borrowing->borrowed_at
         ]);
 
