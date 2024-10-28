@@ -18,7 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('title');
             $table->string('author');
             $table->integer('publication_year');
-            $table->string('category');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->nullable();
             $table->text('description')->nullable(); // Kolom deskripsi
             $table->string('image')->nullable(); // Kolom untuk cover buku
             $table->boolean('available')->default(true);

@@ -48,6 +48,11 @@
         </li>
         @if (auth()->user()->isAdmin)
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.settingcategory') ? 'active' : '' }}" href="{{ route('admin.settingcategory') }}">
+                <i class="fas fa-th-large me-2"></i> Category
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.books') ? 'active' : '' }}" href="{{ route('admin.books') }}">
                 <i class="fas fa-book me-2"></i> Buku
             </a>
@@ -69,18 +74,18 @@
         </li>
         @else
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('search') ? 'active' : '' }}" href="{{ route('search') }}">
-                <i class="fas fa-search me-2"></i> Search
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('peminjaman') ? 'active' : '' }}" href="{{ route('peminjaman') }}">
-                <i class="fas fa-book-open me-2"></i> Peminjaman
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('pengembalian') ? 'active' : '' }}" href="{{ route('pengembalian') }}">
                 <i class="fas fa-undo-alt me-2"></i> Pengembalian
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('books.borrowed') ? 'active' : '' }}" href="{{ route('books.borrowed') }}">
+                <i class="fas fa-book-reader me-2"></i> History Buku yang sedang dipinjam
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('books.history') ? 'active' : '' }}" href="{{ route('books.history') }}">
+                <i class="fas fa-book me-2"></i> History Buku yang sudah dikembalikan
             </a>
         </li>
         @endif

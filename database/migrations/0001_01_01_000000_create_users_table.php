@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('role', ['admin', 'user']);
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('isAdmin')->default(false);
+            $table->boolean('isAdmin')->default(false); // Opsional, jika digunakan untuk kontrol tambahan
             $table->rememberToken();
             $table->timestamps();
         });
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

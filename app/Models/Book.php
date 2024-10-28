@@ -13,7 +13,7 @@ class Book extends Model
         'title',
         'author',
         'publication_year',
-        'category',
+        'category_id',
         'description',
         'image'
     ];
@@ -28,5 +28,9 @@ class Book extends Model
     public function historybooks()
     {
         return $this->hasMany(Historybooks::class, 'book_id');
+    }
+
+    public function category() {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

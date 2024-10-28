@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Setting;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -41,15 +42,22 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        Category::insert(
+            ['name' => 'Horor'],
+        );
+        Category::insert(
+            ['name' => 'Non Fiksi'],
+        );
+
         Book::create(
             [
-                "title"=> 'Warkop DKI',
+                "title" => 'Warkop DKI',
                 "author" => 'Kasino',
-                "publication_year"=> 1997,
-                "category"=> 'Non Fiksi',
-                "description"=> 'Warkop DKI adalah ikon dunia hiburan Indonesia yang tak tergantikan. Melalui trio legendaris Dono, Kasino, dan Indro, Warkop DKI berhasil menghadirkan tawa dan kebahagiaan selama puluhan tahun. Buku ini menggali perjalanan mereka dari awal karier di dunia radio hingga menjadi salah satu grup komedi terbesar di Indonesia. Dengan gaya humor cerdas, satire sosial, dan kekocakan yang abadi, Warkop DKI telah menciptakan film-film dan sketsa-sketsa yang melekat di hati banyak generasi.',
-                "image"=> 'img/books-cover/1729148712-wtoKl7LHnHh7hYEU.jpg',
-                "available"=> true
+                "publication_year" => 1997,
+                "category_id" => 2,
+                "description" => 'Warkop DKI adalah ikon dunia hiburan Indonesia yang tak tergantikan. Melalui trio legendaris Dono, Kasino, dan Indro, Warkop DKI berhasil menghadirkan tawa dan kebahagiaan selama puluhan tahun. Buku ini menggali perjalanan mereka dari awal karier di dunia radio hingga menjadi salah satu grup komedi terbesar di Indonesia. Dengan gaya humor cerdas, satire sosial, dan kekocakan yang abadi, Warkop DKI telah menciptakan film-film dan sketsa-sketsa yang melekat di hati banyak generasi.',
+                "image" => 'img/books-cover/1729148712-wtoKl7LHnHh7hYEU.jpg',
+                "available" => true
             ]
         );
     }

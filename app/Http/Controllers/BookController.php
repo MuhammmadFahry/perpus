@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    // Show list of books
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $categoryId = $request->input('category'); // Ambil ID kategori dari query string
+
+    // Filter buku berdasarkan kategori jika kategori dipilih
+    if ($categoryId) {
+        $books = Book::where('category_id', $categoryId)->paginate(8);
+    } else {
         $books = Book::paginate(8);
-        return view('library', compact('books'));
     }
+
+    $categories = Category::all(); // Ambil semua kategori untuk modal
+
+    return view('library', compact('books', 'categories', 'categoryId'));
+}
+
+
 
     // Store new book
     public function store(Request $request)
@@ -22,13 +34,12 @@ class BookController extends Controller
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'publication_year' => 'required|integer',
-            'category' => 'required|string',
+            'category' => 'required',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            // $imagePath = $request->file('image')->store('book_covers', 'public');
             $imageName = time() . "-" . str()->random() . '.' . $request->file('image')->extension();
             $request->image->move(public_path('img/books-cover'), $imageName);
             $imagePath = 'img/books-cover/'. $imageName;
@@ -37,15 +48,15 @@ class BookController extends Controller
         }
 
         Book::create([
-            'title' => $validated['title'],
-            'author' => $validated['author'],
-            'publication_year' => $validated['publication_year'],
-            'category' => $validated['category'],
-            'description' => $validated['description'],
+            'title' => $request->title,
+            'author' => $request->author,
+            'publication_year' => $request->publication_year,
+            'category_id' => $request->category,
+            'description' => $request->description,
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan.');
+        return redirect()->route('admin.books')->with('success', 'Buku berhasil ditambahkan.');
     }
 
     // Show edit form
@@ -64,7 +75,7 @@ class BookController extends Controller
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'publication_year' => 'required|integer',
-            'category' => 'required|string',
+            'category' => 'required',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -74,7 +85,6 @@ class BookController extends Controller
             if ($book->image) {
                 Storage::disk('public')->delete($book->image);
             }
-            // $imagePath = $request->file('image')->store('book_covers', 'public');
             $imageName = time() . "-" . str()->random() . '.' . $request->file('image')->extension();
             $request->image->move(public_path('img/books-cover'), $imageName);
             $imagePath = 'img/books-cover/'. $imageName;
@@ -86,12 +96,12 @@ class BookController extends Controller
             'title' => $validated['title'],
             'author' => $validated['author'],
             'publication_year' => $validated['publication_year'],
-            'category' => $validated['category'],
+            'category_id' => $validated['category'],
             'description' => $validated['description'],
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui.');
+        return redirect()->route('admin.books')->with('success', 'Buku berhasil diperbarui.');
     }
 
     // Delete book
@@ -108,15 +118,11 @@ class BookController extends Controller
         return back()->with('success', 'Buku berhasil dihapus.');
     }
 
+    // Show a specific book
     public function show($id)
-{
-    // Cari buku berdasarkan ID
-    $book = Book::findOrFail($id);
-
-    // Kirim data buku ke view
-    return view('show', compact('book'));
+    {
+        $book = Book::findOrFail($id);
+        return view('show', compact('book'));
+    }
+    
 }
-}
-
-
-

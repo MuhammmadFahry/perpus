@@ -17,15 +17,7 @@
                         <p class="text-muted">Email: {{ auth()->user()->email }}</p>
                         <p class="text-muted">Bergabung Sejak: {{ auth()->user()->created_at->format('d M Y') }}</p>
                     </div>
-
-                    <!-- Tombol untuk user biasa (bukan admin) -->
-                    @if(!auth()->user()->isAdmin)
-                        <div class="profile-actions mt-4 d-flex flex-column flex-md-row justify-content-center">
-                            <a href="{{ route('books.borrowed') }}" class="btn btn-success mx-2 mb-3 mb-md-0 px-4 py-2 rounded-pill">Buku yang Dipinjam</a>
-                            <a href="{{ route('books.history') }}" class="btn btn-secondary mx-2 mb-3 mb-md-0 px-4 py-2 rounded-pill">Riwayat Peminjaman</a>
-                        </div>
-                    @endif
-
+                    
                     <!-- Tombol untuk semua pengguna (termasuk admin) -->
                     <div class="profile-actions mt-4 d-flex flex-column flex-md-row justify-content-center">
                         <a href="{{ route('profile.edit') }}" class="btn btn-primary mx-2 px-4 py-2 rounded-pill">Edit Profil</a>

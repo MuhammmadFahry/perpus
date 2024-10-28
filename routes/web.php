@@ -12,6 +12,7 @@ use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HistorybooksController;
+use App\Http\Controllers\CategoryController;
 use App\Models\Borrowing;
 use App\Models\Historybooks;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/payment/{id}', function ($id) {
+
     $buku_yang_dipinjam = Borrowing::where('id', $id)->first();
 
     // Jika tidak ditemukan, kembalikan dengan pesan error
@@ -129,6 +131,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('books', BookController::class);
+Route::get('/books', [BookController::class, 'Category'])->name('library');
+
 // routes/web.php
 
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
@@ -141,6 +145,12 @@ Route::post('/tambah/historybook', [HistorybooksController::class, 'tambahhistor
 Route::post('/get-snap-token', [BorrowingController::class, 'createTransaction']);
 Route::post('/midtrans/notification', [BorrowingController::class, 'handleNotification']);
 
+// Route untuk menampilkan daftar kategori dan formulir tambah
+Route::get('/admin/settingcategory', [CategoryController::class, 'index'])->name('admin.settingcategory');
+
+// Route untuk menyimpan kategori baru
+Route::post('/admin/settingcategory', [CategoryController::class, 'store'])->name('admin.settingcategory.store');
+Route::delete('/admin/settingcategory/{id}', [CategoryController::class, 'destroy'])->name('admin.settingcategory.destroy');
 
 
 

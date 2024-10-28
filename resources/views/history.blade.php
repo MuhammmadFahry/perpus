@@ -84,7 +84,7 @@
     </style>
 
     <div class="history-container">
-        <h1>Riwayat Peminjaman</h1>
+        <h1>Riwayat Pengembalian</h1>
         @if (count($historyBooks) <= 0)
             <p class="no-history">Anda belum memiliki riwayat peminjaman. Mulailah petualangan membaca Anda hari ini!</p>
         @else
