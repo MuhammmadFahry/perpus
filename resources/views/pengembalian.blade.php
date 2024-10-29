@@ -41,7 +41,6 @@
 
         .table tbody tr:nth-child(even) {
             background-color: #f8f9fa;
-            /* Warna latar belakang untuk baris genap */
         }
 
         .book-image {
@@ -106,7 +105,7 @@
         <h4>Daftar Buku yang Sedang Dipinjam</h4>
 
         {{-- Alert Success/Error --}}
-        {{-- @if (session('success'))
+        @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -122,10 +121,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        @endif --}}
+        @endif
 
         {{-- Tabel Buku yang Dipinjam --}}
-        @if (count($buku_yang_dipinjams) == 0)
+        @if ($buku_yang_dipinjams->isEmpty())
             <div class="alert alert-info text-center">Tidak ada buku yang sedang dipinjam saat ini.</div>
         @else
             <div class="table-responsive">
@@ -135,6 +134,8 @@
                             <th>Cover</th>
                             <th>Judul Buku</th>
                             <th>Penulis</th>
+                            <th>Tanggal Peminjaman</th>
+                            <th>Batas Pengembalian</th>
                             <th>Denda Buku</th>
                             <th>Aksi</th>
                         </tr>
@@ -142,24 +143,28 @@
                     <tbody>
                         @foreach ($buku_yang_dipinjams as $buku_yang_dipinjam)
                             <tr>
-
                                 <td>
-                                    <img src="/{{ $buku_yang_dipinjam->book->image }}"
-                                        alt="{{ $buku_yang_dipinjam->book->title }} cover" class="book-image" />
+                                    <img src="/{{ $buku_yang_dipinjam->book->image }}" alt="{{ $buku_yang_dipinjam->book->title }} cover" class="book-image" />
                                 </td>
                                 <td>{{ $buku_yang_dipinjam->book->title }}</td>
                                 <td>{{ $buku_yang_dipinjam->book->author }}</td>
-                                <td>{{ $buku_yang_dipinjam->denda > 0 ? 'Rp ' . number_format($buku_yang_dipinjam->denda, 0, ',', '.') : 'Tidak Ada Denda' }}
-                                </td>
+                                <td>{{ $buku_yang_dipinjam->borrowed_at->format('d M Y') }}</td>
                                 <td>
-                                    <form action="{{ $buku_yang_dipinjam->denda > 0 ? route('payment', $buku_yang_dipinjam->id) : route('tambah.historybook') }}" method="{{  $buku_yang_dipinjam->denda > 0 ? 'GET' : 'POST' }}">
+                                    @if ($buku_yang_dipinjam->returned_at)
+                                        <strong>{{ $buku_yang_dipinjam->returned_at->format('d M Y') }}</strong>
+                                    @else
+                                        <span>Belum ditentukan</span>
+                                    @endif
+                                </td>
+                                <td>{{ $buku_yang_dipinjam->denda > 0 ? 'Rp ' . number_format($buku_yang_dipinjam->denda, 0, ',', '.') : 'Tidak Ada Denda' }}</td>
+                                <td>
+                                    <form action="{{ $buku_yang_dipinjam->denda > 0 ? route('payment', $buku_yang_dipinjam->id) : route('tambah.historybook') }}" method="{{ $buku_yang_dipinjam->denda > 0 ? 'GET' : 'POST' }}">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $buku_yang_dipinjam->id }}">
                                         <input type="hidden" name="book_id" value="{{ $buku_yang_dipinjam->book->id }}">
-                                        <input type="hidden" name="tanggal_dipinjam"
-                                            value="{{ $buku_yang_dipinjam->borrowed_at }}">
-                                        <button type="submit"
-                                            class="btn {{ $buku_yang_dipinjam->denda > 0 ? 'btn-payment' : 'btn-primary' }}">
+                                        <input type="hidden" name="tanggal_dipinjam" value="{{ $buku_yang_dipinjam->borrowed_at }}">
+                                        <button type="button" class="btn {{ $buku_yang_dipinjam->denda > 0 ? 'btn-payment' : 'btn-primary' }}"
+                                            data-denda="{{ $buku_yang_dipinjam->denda }}">
                                             {{ $buku_yang_dipinjam->denda > 0 ? 'Bayar Denda' : 'Kembalikan Buku' }}
                                         </button>
                                     </form>
@@ -172,19 +177,29 @@
         @endif
     </div>
 
-    {{-- Modal untuk konfirmasi pembayaran menggunakan JS --}}
+    {{-- Modal untuk konfirmasi pembayaran menggunakan SweetAlert2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // document.querySelectorAll('.btn-payment').forEach(function(button) {
-        //     button.addEventListener('click', function(event) {
-        //         event.preventDefault();
-        //         let confirmation = confirm("Apakah Anda yakin ingin melanjutkan ke pembayaran?");
-        //         if (confirmation) {
-        //             this.closest('form').submit();
-        //         }
-        //     });
-        // });
-    </script>
+        document.querySelectorAll('.btn-payment').forEach(function(button) {
+            button.addEventListener('click', function() {
+                let form = this.closest('form');
+                let denda = this.dataset.denda; // Ambil data denda dari atribut data
 
+                Swal.fire({
+                    title: 'Konfirmasi Pembayaran',
+                    text: `Apakah Anda yakin ingin melanjutkan pembayaran denda sebesar Rp ${denda} ?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, lanjutkan',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
 
 @push('scripts')
@@ -195,7 +210,7 @@
             text: '{{ session('success') }}',
             icon: 'success',
             confirmButtonText: 'Nice'
-        })
+        });
         @endif
     </script>
 @endpush

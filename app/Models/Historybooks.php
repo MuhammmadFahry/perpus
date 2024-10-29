@@ -28,6 +28,6 @@ class Historybooks extends Model
     // Relasi dengan model Book
     public function book()
     {
-        return $this->belongsTo(Book::class, 'book_id');
+        return $this->belongsTo(Book::class);
     }
 }

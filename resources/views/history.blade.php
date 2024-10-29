@@ -90,7 +90,7 @@
         @else
             <div class="history-list">
                 @foreach ($historyBooks as $historyBook)
-                    <div class="history-card">
+                <div class="history-card">
                         <img src="/{{ $historyBook->book->image }}" alt="{{ $historyBook->book->title }} cover" class="book-image"/>
                         <h2>{{ $historyBook->book->title }}</h2>
                         <p><strong>Penulis:</strong> {{ $historyBook->book->author }}</p>

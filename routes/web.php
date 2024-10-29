@@ -153,5 +153,6 @@ Route::post('/admin/settingcategory', [CategoryController::class, 'store'])->nam
 Route::delete('/admin/settingcategory/{id}', [CategoryController::class, 'destroy'])->name('admin.settingcategory.destroy');
 
 
+Route::get('/books/category/{id}', [BookController::class, 'getBooksByCategory'])->name('books.byCategory');
 
 

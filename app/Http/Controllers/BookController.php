@@ -10,20 +10,20 @@ use Illuminate\Support\Facades\Storage;
 class BookController extends Controller
 {
     public function index(Request $request)
-{
-    $categoryId = $request->input('category'); // Ambil ID kategori dari query string
+    {
+        $categoryId = $request->input('category'); // Ambil ID kategori dari query string
 
-    // Filter buku berdasarkan kategori jika kategori dipilih
-    if ($categoryId) {
-        $books = Book::where('category_id', $categoryId)->paginate(8);
-    } else {
-        $books = Book::paginate(8);
+        // Filter buku berdasarkan kategori jika kategori dipilih
+        if ($categoryId) {
+            $books = Book::where('category_id', $categoryId)->paginate(8);
+        } else {
+            $books = Book::paginate(8);
+        }
+
+        $categories = Category::all(); // Ambil semua kategori untuk modal
+
+        return view('library', compact('books', 'categories', 'categoryId'));
     }
-
-    $categories = Category::all(); // Ambil semua kategori untuk modal
-
-    return view('library', compact('books', 'categories', 'categoryId'));
-}
 
 
 
@@ -42,7 +42,7 @@ class BookController extends Controller
         if ($request->hasFile('image')) {
             $imageName = time() . "-" . str()->random() . '.' . $request->file('image')->extension();
             $request->image->move(public_path('img/books-cover'), $imageName);
-            $imagePath = 'img/books-cover/'. $imageName;
+            $imagePath = 'img/books-cover/' . $imageName;
         } else {
             $imagePath = null;
         }
@@ -87,7 +87,7 @@ class BookController extends Controller
             }
             $imageName = time() . "-" . str()->random() . '.' . $request->file('image')->extension();
             $request->image->move(public_path('img/books-cover'), $imageName);
-            $imagePath = 'img/books-cover/'. $imageName;
+            $imagePath = 'img/books-cover/' . $imageName;
         } else {
             $imagePath = $book->image;
         }
@@ -124,5 +124,10 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         return view('show', compact('book'));
     }
-    
+
+    public function getBooksByCategory($id)
+    {
+        $books = Book::where('category_id', $id)->get();
+        return view('partials.books-list', compact('books'));
+    }
 }
