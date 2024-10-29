@@ -29,12 +29,22 @@ class CategoryController extends Controller
 
     // Menghapus kategori dari database
     public function destroy($id)
-    {
-        $category = Category::findOrFail($id);
-        $category->delete();
+{
+    $category = Category::findOrFail($id);
 
-        return redirect()->route('admin.settingcategory')->with('success', 'Kategori berhasil dihapus!');
+    // Cek apakah kategori memiliki buku terkait
+    if ($category->books()->exists()) {
+        return redirect()->route('admin.settingcategory')
+            ->with('error', 'Kategori ini memiliki buku terkait dan tidak dapat dihapus.');
     }
+
+    // Jika tidak memiliki buku terkait, lanjutkan penghapusan
+    $category->delete();
+
+    return redirect()->route('admin.settingcategory')
+        ->with('success', 'Kategori berhasil dihapus.');
+}
+
 
 
 }

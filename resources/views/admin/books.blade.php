@@ -52,7 +52,6 @@
                         <input type="file" class="form-control" id="image" name="image" accept="image/*">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-secondary" id="cancelBookForm">Batal</button>
                 </form>
             </div>
 
@@ -116,6 +115,111 @@
         </div>
     </div>
 
+    <style>
+        /* Ensure all cards have consistent height and width */
+        .book-card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .book-card {
+            width: 250px;
+            height: 450px;
+            /* Fixed height for uniformity */
+            border: 1px solid #000000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            background-color: #171616;
+            /* Light background for cards */
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #000000;
+            /* Adds separation between image and content */
+        }
+
+        .book-card .card-body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .book-card .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: #ffffff;
+            /* Change to a darker color for better contrast */
+        }
+
+        /* Improved button styles */
+        .card-body .btn {
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            /* Increased padding for a better touch target */
+            font-size: 1rem;
+            /* Consistent font size */
+            border-radius: 5px;
+            border: none;
+            /* Remove border for a cleaner look */
+            color: #fff;
+            /* White text for better visibility */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .card-body .btn-primary {
+            background-color: #007bff;
+            /* Primary button color */
+        }
+
+        .card-body .btn-warning {
+            background-color: #ffc107;
+            /* Warning button color */
+        }
+
+        .card-body .btn-danger {
+            background-color: #dc3545;
+            /* Danger button color */
+        }
+
+        .card-body .btn:hover {
+            transform: translateY(-3px);
+            /* Subtle lift on hover */
+        }
+
+        .book-card .card-body p {
+            margin: 0;
+            text-align: center;
+            color: #666;
+            /* Softer text color for descriptions */
+        }
+
+        /* Responsive layout */
+        @media (max-width: 576px) {
+            .book-card-container {
+                gap: 1rem;
+            }
+        }
+    </style>
+
+
     <!-- JQuery & JS Script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -156,8 +260,8 @@
                                     <label for="image">Cover Buku</label>
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <button type="button" class="btn btn-secondary" id="cancelBookForm">Batal</button>`)
+                                    <button type="submit" class="btn btn-primary">Simpan</button>`
+            )
             resetForm();
         });
 
@@ -240,14 +344,33 @@
                     <label for="image">Cover Buku</label>
                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
                 </div>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <button type="button" class="btn btn-secondary" id="cancelBookForm">Batal</button>`);
+                <button type="submit" class="btn btn-primary">Simpan</button>`);
         });
 
         // resetForm();
+
+        // Handle delete book confirmation
+        $('.deleteBookForm').submit(function(e) {
+            e.preventDefault(); // Prevent form submission
+            const form = this;
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan bisa mengembalikan buku ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Submit the form if confirmed
+                }
+            });
+        });
     </script>
 @endsection
-
 
 @push('scripts')
     <script>

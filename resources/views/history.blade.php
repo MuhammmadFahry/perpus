@@ -90,12 +90,14 @@
         @else
             <div class="history-list">
                 @foreach ($historyBooks as $historyBook)
-                <div class="history-card">
-                        <img src="/{{ $historyBook->book->image }}" alt="{{ $historyBook->book->title }} cover" class="book-image"/>
-                        <h2>{{ $historyBook->book->title }}</h2>
-                        <p><strong>Penulis:</strong> {{ $historyBook->book->author }}</p>
-                        <p><strong>Tanggal Pengembalian:</strong> {{ $historyBook->created_at->format('d M Y') }}</p>
-                    </div>
+                    @if ($historyBook->book)
+                        <div class="history-card">
+                            <img src="/{{ $historyBook->book->image }}" alt="{{ $historyBook->book->title }} cover" class="book-image"/>
+                            <h2>{{ $historyBook->book->title }}</h2>
+                            <p><strong>Penulis:</strong> {{ $historyBook->book->author }}</p>
+                            <p><strong>Tanggal Pengembalian:</strong> {{ $historyBook->created_at->format('d M Y') }}</p>
+                        </div>
+                    @endif
                 @endforeach
             </div>
         @endif

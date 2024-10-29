@@ -23,10 +23,10 @@
                         <tbody>
                             @foreach($historysemuanya as $history)
                                 <tr>
-                                    <td>{{ $history->book->title }}</td>
-                                    <td>{{ $history->user->name }}</td>
-                                    <td>{{ $history->tanggal_dipinjam }}</td>
-                                    <td>{{ $history->created_at->format('d M Y') }}</td>
+                                    <td>{{ $history->book?->title ?? 'Data tidak tersedia' }}</td>
+                                    <td>{{ $history->user?->name ?? 'Data tidak tersedia' }}</td>
+                                    <td>{{ $history->tanggal_dipinjam ?? 'Data tidak tersedia' }}</td>
+                                    <td>{{ $history->created_at?->format('d M Y') ?? 'Data tidak tersedia' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
