@@ -12,17 +12,46 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     @stack('style')
 
+    <style>
+        body {
+            background-color: #000; /* Background color for dark theme */
+            color: #fff; /* Text color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full height */
+        }
+
+        .wrapper {
+            flex: 1; /* Allow wrapper to grow and fill available space */
+            display: flex; /* Enable flexbox for layout */
+        }
+
+        .content {
+            flex: 1; /* Allow content to grow and fill available space */
+            padding: 15px; /* Add padding to content */
+        }
+
+        .footer {
+            background-color: #343a40; /* Dark background for footer */
+            text-align: center; /* Center align text */
+            padding: 15px 0; /* Vertical padding */
+        }
+
+        .footer p {
+            margin: 0; /* Remove default margin */
+            color: #ffffff; /* Footer text color */
+            text-align: center; /* Center align text */
+        }
+    </style>
 </head>
 
-<body class="text-white bg-black">
+<body>
     <div class="wrapper">
         <!-- Include Navbar Component -->
         <x-navbar></x-navbar>
 
         <!-- Include Sidebar Component -->
-        <x-sidebar-perpus img=""
-        nama="STARBOY"
-        ></x-sidebar>
+        <x-sidebar-perpus img="" nama="STARBOY"></x-sidebar>
 
         <!-- Content -->
         <div class="content content-shifted" id="content">
@@ -30,13 +59,15 @@
         </div>
     </div>
 
+    <footer class="footer">
+        <p>&copy; {{ date('Y') }} Perpustakaan. All rights reserved.</p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/sidebar.js') }}"></script>
     @stack('scripts')
-
-
 </body>
 
 </html>

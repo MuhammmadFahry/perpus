@@ -28,7 +28,8 @@
             </div>
         </div>
 
-        <!-- Tombol Menu Perpustakaan -->
+        <!-- Tombol Menu Perpustakaan (Hanya untuk Non-User) -->
+        @if (auth()->user()->isAdmin)
         <div class="col-md-6">
             <div class="card mb-4 shadow-sm border-0">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4V0dA51AFAXPGnsuZPjeJc19_fnO-ciWHxQ&s" class="card-img-top" alt="Koleksi Buku" style="height: 300px; object-fit: cover;">
@@ -39,9 +40,10 @@
                 </div>
             </div>
         </div>
+        @endif
 
-        <!-- Tombol Tim Perpustakaan -->
-        <div class="col-md-6">
+        <!-- Tombol Tim Perpustakaan (untuk semua pengguna) -->
+        <div class="@cannot('isUser') col-md-6 @else col-md-12 @endcannot">
             <div class="card mb-4 shadow-sm border-0">
                 <img src="https://storage.googleapis.com/ekrutassets/blogs/images/000/004/582/original/H1_1._15_Keahlian_teamwork_yang_harus_dikuasai_dalam_dunia_kerja_saat_ini.jpg" class="card-img-top" alt="Tim Perpustakaan" style="height: 300px; object-fit: cover;">
                 <div class="card-body text-center">

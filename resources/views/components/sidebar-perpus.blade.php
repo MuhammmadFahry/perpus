@@ -74,6 +74,11 @@
         </li>
         @else
         <li class="nav-item">
+            <a class="nav-link {{ request()->is('library') ? 'active' : '' }}" href="{{ url('/library') }}">
+                <i class="fas fa-book me-2"></i> Library
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('pengembalian') ? 'active' : '' }}" href="{{ route('pengembalian') }}">
                 <i class="fas fa-undo-alt me-2"></i> Pengembalian
             </a>

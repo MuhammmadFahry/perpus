@@ -94,7 +94,7 @@
                     <form id="borrow-form" action="{{ route('books.borrow', $book->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @php
-                            $defaultReturnDate = \Carbon\Carbon::now()->addDays(-7)->format('Y-m-d');
+                            $defaultReturnDate = \Carbon\Carbon::now()->addDays(7)->format('Y-m-d');
                         @endphp
                         <input type="hidden" name="return_date" value="{{ $defaultReturnDate }}" required>
                         <button type="button" class="btn btn-borrow" onclick="confirmBorrow('{{ $book->title }}', '{{ $book->author }}')">Pinjam</button>
@@ -109,7 +109,7 @@
         <script>
             function confirmBorrow(bookTitle, bookAuthor) {
                 var returnDate = new Date();
-                returnDate.setDate(returnDate.getDate() + -7);
+                returnDate.setDate(returnDate.getDate() + 7);
                 var returnDateString = returnDate.toISOString().split('T')[0];
 
                 Swal.fire({
