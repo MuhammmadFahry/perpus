@@ -104,25 +104,6 @@
     <div class="container">
         <h4>Daftar Buku yang Sedang Dipinjam</h4>
 
-        {{-- Alert Success/Error --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
         {{-- Tabel Buku yang Dipinjam --}}
         @if ($buku_yang_dipinjams->isEmpty())
             <div class="alert alert-info text-center">Tidak ada buku yang sedang dipinjam saat ini.</div>
@@ -163,7 +144,7 @@
                                         <input type="hidden" name="id" value="{{ $buku_yang_dipinjam->id }}">
                                         <input type="hidden" name="book_id" value="{{ $buku_yang_dipinjam->book->id }}">
                                         <input type="hidden" name="tanggal_dipinjam" value="{{ $buku_yang_dipinjam->borrowed_at }}">
-                                        <button type="button" class="btn {{ $buku_yang_dipinjam->denda > 0 ? 'btn-payment' : 'btn-primary' }}"
+                                        <button type="{{ $buku_yang_dipinjam->denda > 0 ? 'button' : 'submit' }}" class="btn {{ $buku_yang_dipinjam->denda > 0 ? 'btn-payment' : 'btn-primary' }}"
                                             data-denda="{{ $buku_yang_dipinjam->denda }}">
                                             {{ $buku_yang_dipinjam->denda > 0 ? 'Bayar Denda' : 'Kembalikan Buku' }}
                                         </button>
