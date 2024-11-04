@@ -40,6 +40,16 @@
             })
         </script>
     @endif
+    @if (Session::has('status'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: '{{ session('status') }}',
+                icon: 'success',
+                confirmButtonText: 'Cool'
+            })
+        </script>
+    @endif
 
     @stack('scripts')
 </body>

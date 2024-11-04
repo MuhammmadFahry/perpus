@@ -1,10 +1,24 @@
 /* General styles */
 body {
     padding-top: 56px; /* Height of the navbar */
+    background-color: #000; /* Background color for dark theme */
+    color: #fff; /* Text color */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full height */
 }
 
 .wrapper {
     display: flex;
+    flex: 1; /* Allow wrapper to grow and fill available space */
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+    padding: 15px; /* Add padding to content */
 }
 
 /* Navbar styling */
@@ -78,18 +92,20 @@ body {
     color: #fff;
 }
 
-/* Content styling */
-.content {
-    flex-grow: 1;
-    padding: 20px;
-    margin-left: 0;
-    transition: margin-left 0.3s ease;
+/* Footer styling */
+.footer {
+    background-color: #343a40; /* Dark background for footer */
+    text-align: center; /* Center align text */
+    padding: 15px 0; /* Vertical padding */
 }
 
-.content.content-shifted {
-    margin-left: 250px;
+.footer p {
+    margin: 0; /* Remove default margin */
+    color: #ffffff; /* Footer text color */
+    text-align: center; /* Center align text */
 }
 
+/* Dropdown and list group */
 .dropdown-item:hover {
     background-color: #495057;
 }
@@ -103,11 +119,12 @@ body {
     border: 0;
     transition: all 300ms;
 }
+
 .list-group-item:hover {
     background-color: #495057;
 }
 
-li.logout:hover a{
+li.logout:hover a {
     color: #dc2626 !important;
 }
 

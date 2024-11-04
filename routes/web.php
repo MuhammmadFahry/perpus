@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageController;
@@ -156,3 +157,10 @@ Route::delete('/admin/settingcategory/{id}', [CategoryController::class, 'destro
 Route::get('/books/category/{id}', [BookController::class, 'getBooksByCategory'])->name('books.byCategory');
 
 
+// Route untuk forgot password
+Route::get('/forgot-password', [PasswordResetController::class, 'showForgotPasswordForm'])->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
+
+// Route untuk reset password
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->middleware('guest')->name('password.update');

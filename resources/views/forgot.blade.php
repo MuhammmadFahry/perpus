@@ -28,30 +28,17 @@
 
     <x-form class="card">
         <x-slot:title>
-            Login
+            Forgot Password
         </x-slot:title>
 
         <x-slot:route>
-            {{ route('login.submit') }}
+            {{ route('password.email') }}
         </x-slot:route>
 
         <x-input-email>
             Email
         </x-input-email>
-        <x-input-password>
-            <x-slot:title>
-                Password
-            </x-slot:title>
-            <x-slot:id>
-                password
-            </x-slot:id>
-            <x-slot:type>
-                password
-            </x-slot:type>
-            <x-slot:name>
-                password
-            </x-slot:name>
-        </x-input-password>
+
 
         <x-button-submit>
             Login
@@ -59,12 +46,8 @@
 
         <!-- Link to Register and Forgot Password -->
         <x-slot:haveLogin>
-            Don't have an account? <a href="{{ route('register') }}" onclick="goToRegister(event)">Register</a>
+            Remember Password <a href="{{ route('login') }}" onclick="goToLogin(event)">Login</a>
         </x-slot:haveLogin>
-
-        <div class="mt-3 text-center">
-            <a href="{{ route('password.request') }}" onclick="goToForgotPassword(event)">Forgot Password?</a>
-        </div>
 
         @error('email')
             <p class="mt-3 text-center text-danger">
@@ -75,21 +58,13 @@
 
     @push('scripts')
         <script>
-            function goToRegister(event) {
+            
+            function goToLogin(event) {
                 event.preventDefault();
                 const card = document.querySelector('.card');
                 card.classList.add('hide');
                 setTimeout(function() {
-                    window.location.href = "{{ route('register') }}";
-                }, 700); // Match this duration to the CSS transition time
-            }
-
-            function goToForgotPassword(event) {
-                event.preventDefault();
-                const card = document.querySelector('.card');
-                card.classList.add('hide');
-                setTimeout(function() {
-                    window.location.href = "{{ route('password.request') }}";
+                    window.location.href = "{{ route('login') }}";
                 }, 700); // Match this duration to the CSS transition time
             }
 
