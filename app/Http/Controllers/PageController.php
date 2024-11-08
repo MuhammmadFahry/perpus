@@ -23,7 +23,7 @@ class PageController extends Controller
             'books' => Book::all()
         ]);
     }
-    
+
     public function profile()
     {
         $user = auth()->user();

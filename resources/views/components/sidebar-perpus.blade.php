@@ -41,11 +41,6 @@
         </div>
     </div>
     <ul class="px-3 nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('Home') ? 'active' : '' }}" href="{{ route('Home') }}">
-                <i class="fas fa-home me-2"></i> Home
-            </a>
-        </li>
         @if (auth()->user()->isAdmin)
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.settingcategory') ? 'active' : '' }}" href="{{ route('admin.settingcategory') }}">

@@ -55,8 +55,9 @@
 </style>
 
 <div class="container">
-    <h1 class="text-center my-5 font-weight-bold welcome-title">Selamat Datang di Perpustakaan Garuda</h1>
-
+    <h1 class="text-center my-5 font-weight-bold welcome-title">
+        Selamat Datang di Garuda Perpustakaan, {{ auth()->user()->name }}!
+    </h1>
     <div class="row">
         <!-- Penjelasan tentang perpustakaan -->
         <div class="col-md-12">
