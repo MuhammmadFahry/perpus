@@ -16,21 +16,37 @@
 
     <!-- Daftar kategori -->
     <h3 class="mt-5">Daftar Kategori</h3>
-    <ul class="list-group">
-        @forelse($categories as $category)
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ $category->name }}
-                <!-- Tombol Hapus -->
-                <form action="{{ route('admin.settingcategory.destroy', $category->id) }}" method="POST" class="delete-form">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-danger btn-sm delete-button">Hapus</button>
-                </form>
-            </li>
-        @empty
-            <li class="list-group-item">Belum ada kategori.</li>
-        @endforelse
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nama Kategori</th>
+                    <th scope="col" style="width: 80px;">Aksi</th> <!-- Membatasi lebar kolom aksi -->
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($categories as $category)
+                    <tr>
+                        <td>{{ $category->name }}</td>
+                        <td class="text-center">
+                            <!-- Tombol Hapus dengan teks singkat -->
+                            <form action="{{ route('admin.settingcategory.destroy', $category->id) }}" method="POST" class="delete-form d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-danger btn-sm delete-button" title="Hapus">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2" class="text-center">Belum ada kategori.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 

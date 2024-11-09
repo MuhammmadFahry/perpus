@@ -56,7 +56,7 @@
 
 <div class="container">
     <h1 class="text-center my-5 font-weight-bold welcome-title">
-        Selamat Datang di Garuda Perpustakaan, {{ auth()->user()->name }}!
+        Selamat Datang di Nusantara Library, {{ auth()->user()->name }}!
     </h1>
     <div class="row">
         <!-- Penjelasan tentang perpustakaan -->
@@ -65,19 +65,19 @@
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <!-- Gambar perpustakaan -->
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBHbK6Sl5zXxEZJa_g7vBuxhU3aQJ1NnV2rQ&s" class="card-img h-100" alt="Perpustakaan Garuda">
+                        <img src="https://files.oaiusercontent.com/file-4GekkV9MUUiTathWNIuNTcPl?se=2024-11-09T13%3A41%3A10Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De7a9e4fd-db63-4de2-849a-ba1da9322426.webp&sig=/qslU/SvAwc%2BUaI%2B2RcmO5FrFsRKAAp1t/46z4ULi60%3D" class="card-img h-100" alt="Perpustakaan Garuda">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h3 class="card-title text-center font-weight-bold">Tentang Perpustakaan Garuda</h3>
+                            <h3 class="card-title text-center font-weight-bold">Tentang Nusantara Library</h3>
                             <p class="card-text text-justify my-4">
-                                Perpustakaan Garuda adalah pusat literasi yang berkomitmen memberikan akses ke berbagai sumber daya berkualitas tinggi, baik fisik maupun digital. Kami menyediakan koleksi buku yang <span class="highlight">beragam dan terbaru</span>, mencakup topik-topik dari literatur klasik hingga ilmu pengetahuan modern, untuk memenuhi kebutuhan pembaca dari berbagai kalangan.
+                                Nusantara Library adalah pusat literasi yang berkomitmen memberikan akses ke berbagai sumber daya berkualitas tinggi, baik fisik maupun digital. Kami menyediakan koleksi buku yang <span class="highlight">beragam dan terbaru</span>, mencakup topik-topik dari literatur klasik hingga ilmu pengetahuan modern, untuk memenuhi kebutuhan pembaca dari berbagai kalangan.
                             </p>
                             <p class="card-text text-justify">
                                 Selain menjadi tempat membaca, kami adalah pusat bagi komunitas pembaca dan pecinta literasi. Dengan fasilitas baca yang nyaman dan suasana yang tenang, Anda dapat menjelajahi dunia melalui halaman-halaman buku kami. Kami percaya bahwa setiap halaman adalah <span class="highlight">jendela menuju dunia baru</span>, yang dapat memperkaya pengetahuan, inspirasi, dan imajinasi Anda.
                             </p>
                             <p class="card-text text-justify">
-                                Perpustakaan Garuda juga menawarkan berbagai <span class="highlight">program edukasi dan kegiatan literasi</span> yang bertujuan untuk menghubungkan para anggota komunitas. Diskusi buku, workshop penulisan, dan seminar literasi adalah sebagian kecil dari upaya kami untuk menjadikan perpustakaan sebagai pusat pembelajaran yang interaktif dan inklusif.
+                                Nusantara Library juga menawarkan berbagai <span class="highlight">program edukasi dan kegiatan literasi</span> yang bertujuan untuk menghubungkan para anggota komunitas. Diskusi buku, workshop penulisan, dan seminar literasi adalah sebagian kecil dari upaya kami untuk menjadikan perpustakaan sebagai pusat pembelajaran yang interaktif dan inklusif.
                             </p>
                         </div>
                     </div>

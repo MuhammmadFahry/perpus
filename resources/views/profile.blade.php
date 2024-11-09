@@ -5,7 +5,7 @@
         @if(auth()->check())
             <div class="profile-card shadow-lg rounded p-4">
                 <div class="profile-header text-center mb-4">
-                    <h1 class="font-weight-bold text-primary">Profil Anggota</h1>
+                    <h1 class="font-weight-bold text-white">Profil Anggota</h1>
                 </div>
                 <div class="profile-body d-flex flex-column align-items-center">
                     <div class="profile-avatar mb-3">
@@ -17,7 +17,7 @@
                         <p class="text-muted">Email: {{ auth()->user()->email }}</p>
                         <p class="text-muted">Bergabung Sejak: {{ auth()->user()->created_at->format('d M Y') }}</p>
                     </div>
-                    
+
                     <!-- Tombol untuk semua pengguna (termasuk admin) -->
                     <div class="profile-actions mt-4 d-flex flex-column flex-md-row justify-content-center">
                         <a href="{{ route('profile.edit') }}" class="btn btn-primary mx-2 px-4 py-2 rounded-pill">Edit Profil</a>

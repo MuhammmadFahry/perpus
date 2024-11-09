@@ -10,8 +10,7 @@
         h4 {
             font-weight: bold;
             color: #ffffff;
-            margin-bottom: 30px;
-            text-align: center;
+            margin-bottom: 30px
         }
 
         .table {

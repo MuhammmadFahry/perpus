@@ -80,7 +80,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('books.history') ? 'active' : '' }}" href="{{ route('books.history') }}">
-                <i class="fas fa-book me-2"></i> History Buku yang sudah dikembalikan
+                <i class="fas fa-book me-2"></i> History Buku user
             </a>
         </li>
         @endif

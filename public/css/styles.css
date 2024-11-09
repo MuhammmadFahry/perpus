@@ -1,11 +1,22 @@
+/* Color Palette */
+:root {
+    --bg-primary: #1c1c1e;
+    --bg-secondary: #2c2c2e;
+    --bg-tertiary: #3a3a3c;
+    --text-primary: #ffffff;
+    --text-secondary: #ababab;
+    --accent-color: #5e5ce6;
+}
+
 /* General styles */
 body {
     padding-top: 56px; /* Height of the navbar */
-    background-color: #000; /* Background color for dark theme */
-    color: #fff; /* Text color */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Full height */
+    font-family: 'Inter', sans-serif;
 }
 
 .wrapper {
@@ -18,18 +29,20 @@ body {
     padding: 20px;
     margin-left: 0;
     transition: margin-left 0.3s ease;
+    background-color: var(--bg-primary);
     padding: 15px; /* Add padding to content */
 }
 
 /* Navbar styling */
 .navbar {
-    background-color: #222;
+    background-color: var(--bg-secondary);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
     font-size: 1.5rem;
     font-weight: bold;
+    color: var(--text-primary);
 }
 
 .navbar .btn-outline-light {
@@ -49,10 +62,11 @@ body {
     height: calc(100% - 56px);
     transition: all 0.3s ease;
     z-index: 1000;
-    background-color: #111;
+    background-color: var(--bg-secondary);
     overflow-y: auto;
     box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
     left: -250px; /* Hide sidebar by default */
+    border-right: 1px solid var(--bg-tertiary);
 }
 
 .sidebar.show-sidebar {
@@ -60,10 +74,10 @@ body {
 }
 
 .sidebar-header {
-    border-bottom: 1px solid #495057;
+    border-bottom: 1px solid var(--bg-tertiary);
     margin-bottom: 20px;
     padding: 15px;
-    background-color: #222;
+    background-color: var(--bg-secondary);
 }
 
 .nav-link {
@@ -71,7 +85,7 @@ body {
     margin: 10px 0;
     display: flex;
     align-items: center;
-    color: #bbb;
+    color: var(--text-secondary);
     padding: 10px 15px;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
@@ -82,32 +96,41 @@ body {
 }
 
 .nav-link.active {
-    background-color: #343a40;
-    color: #fff;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
     border-radius: 5px;
 }
 
 .nav-link:hover {
-    background-color: #495057;
-    color: #fff;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
 }
 
 /* Footer styling */
 .footer {
-    background-color: #343a40; /* Dark background for footer */
-    text-align: center; /* Center align text */
-    padding: 15px 0; /* Vertical padding */
+    background-color: var(--bg-secondary);
+    text-align: center;
+    padding: 15px 0;
 }
 
 .footer p {
-    margin: 0; /* Remove default margin */
-    color: #ffffff; /* Footer text color */
-    text-align: center; /* Center align text */
+    margin: 0;
+    color: var(--text-secondary);
+    text-align: center;
 }
 
 /* Dropdown and list group */
+.dropdown-menu {
+    background-color: var(--bg-secondary);
+    border-color: var(--bg-tertiary);
+}
+
+.dropdown-item {
+    color: var(--text-primary);
+}
+
 .dropdown-item:hover {
-    background-color: #495057;
+    background-color: var(--bg-tertiary);
 }
 
 .list-group {
@@ -118,10 +141,12 @@ body {
 .list-group-item {
     border: 0;
     transition: all 300ms;
+    background-color: transparent;
+    color: var(--text-primary);
 }
 
 .list-group-item:hover {
-    background-color: #495057;
+    background-color: var(--bg-tertiary);
 }
 
 li.logout:hover a {
@@ -173,4 +198,27 @@ li.logout:hover a {
     .content.content-shifted {
         margin-left: 250px;
     }
+}
+
+/* Additional utility classes */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.bg-dark-custom {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Scrollbar styling (for webkit browsers) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
 }
