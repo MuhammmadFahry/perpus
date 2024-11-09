@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function welcome()
     {
-        return view('Home');
+        return view('landingpage');
     }
 
     public function search()

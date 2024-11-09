@@ -32,7 +32,7 @@ class AuthController extends Controller
                 // dd('admin.welcome');
                 return redirect()->route('admin.index');
             } else {
-                return redirect('/');
+                return redirect('/home');
             }
             // dd(auth()->user()->isAdmin);
         }
@@ -77,6 +77,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('landingpage');
     }
 }

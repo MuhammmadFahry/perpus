@@ -19,9 +19,11 @@ use App\Models\Historybooks;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Snap;
 
-Route::get('/', function () {
-    return view('Home');
-})->middleware('auth')->name('Home');
+Route::get('/', [PageController::class, 'welcome'])->name('landingpage');
+
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth')->name('home');
 
 Route::get('/library', [BookController::class, "index"])->name('library');
 
