@@ -41,11 +41,10 @@
 
         .content {
             flex-grow: 1;
-            padding: 20px;
             margin-left: 0;
             transition: margin-left 0.3s ease;
             background-color: var(--bg-primary);
-            padding: 15px;
+            position: relative;
             /* Add padding to content */
         }
 
@@ -223,6 +222,9 @@
             background-color: var(--bg-secondary);
             text-align: center;
             padding: 15px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%
         }
 
         .footer p {
