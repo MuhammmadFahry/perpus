@@ -3,7 +3,7 @@
 # 🏛️ Nusa Library
 
 <p align="center">
-  <img src="public/assets/img/img1.jpeg" alt="Nusa Library Logo">
+  <img src="public/assets/img/img1.jpeg" alt="Nusa Library Logo" width="200">
 </p>
 
 </div>
