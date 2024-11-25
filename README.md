@@ -1,4 +1,4 @@
-<p align="center"> <a href="#" target="_blank"> <img src="{{ asset('assets/img/img1.jpeg') }}" width="400" alt="Nusa Library Logo"> </a> </p> <h1 align="center">Tentang Nusa Library</h1>
+<p align="center"> <a href="#" target="_blank"> <img src="https://files.oaiusercontent.com/file-siMytq6V7xX4Nnf6x2C15MKH?se=2024-11-25T03%3A10%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D9a1112ed-0afb-4359-a60f-95da3a07bb21.webp&sig=vQALqxzjNnAost5iRgrw28MI/3QL9o%2BZniij1QT20ac%3D" width="400" alt="Nusa Library Logo"> </a> </p> <h1 align="center">Tentang Nusa Library</h1>
 Nusa Library adalah platform perpustakaan berbasis web yang menghadirkan pengalaman mudah, cepat, dan efisien bagi pengguna untuk mengakses koleksi buku dan sumber daya digital lainnya. Dengan desain antarmuka yang intuitif dan fitur yang lengkap, Nusa Library menjadi solusi modern untuk pengelolaan perpustakaan digital.
 
 ✨ Fitur Utama Nusa Library
