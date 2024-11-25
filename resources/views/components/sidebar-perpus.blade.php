@@ -8,7 +8,7 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         <img src="{{ auth()->user()->profile_picture ? asset('img/'. auth()->user()->profile_picture) : asset('img/default-profile.png') }}"
-                        alt="Profile" class="rounded-circle" width="30" height="30">
+                            alt="Profile" class="rounded-circle" width="30" height="30">
                         <span style="margin-left: 5px">
                             {{ auth()->user()->name }}
                         </span>
@@ -42,6 +42,12 @@
     </div>
     <ul class="px-3 nav flex-column">
         @if (auth()->user()->isAdmin)
+        <li class="nav-item">
+            <a class="nav-link {{ Route::is('admin.index') ? 'active' : '' }}" href="{{ route('admin.index') }}">
+                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.settingcategory') ? 'active' : '' }}" href="{{ route('admin.settingcategory') }}">
                 <i class="fas fa-th-large me-2"></i> Category
@@ -85,4 +91,11 @@
         </li>
         @endif
     </ul>
+    <!-- Footer Section -->
+    <div class="sidebar-footer text-center py-3" style="position: absolute; bottom: 0; width: 100%;">
+        <p class="text-muted small mb-0">
+            Created by Muhammad Fa'hriyansah 😊❤️
+        </p>
+    </div>
+
 </div>

@@ -65,7 +65,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <!-- Gambar perpustakaan -->
-                        <img src="https://files.oaiusercontent.com/file-4GekkV9MUUiTathWNIuNTcPl?se=2024-11-09T13%3A41%3A10Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De7a9e4fd-db63-4de2-849a-ba1da9322426.webp&sig=/qslU/SvAwc%2BUaI%2B2RcmO5FrFsRKAAp1t/46z4ULi60%3D" class="card-img h-100" alt="Perpustakaan Garuda">
+                        <img src="{{ asset('assets/img/img3.jpeg') }}" class="card-img h-100" alt="Perpustakaan Garuda">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

@@ -150,7 +150,7 @@
             text-align: center;
             position: relative;
             padding: 2rem;
-            background: linear-gradient(rgba(65, 66, 68, 0.8), rgba(31, 41, 55, 0.9)), url('https://files.oaiusercontent.com/file-yAQ66yKve4QrMOq0SFLDNoXK?se=2024-11-09T12%3A58%3A16Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D1f625c6e-7378-4357-bc6e-240b6fea9745.webp&sig=AmANdTRQjD0FXCHeLgt/M5z905izlW2YVCIpLC2AYAk%3D');
+            background: linear-gradient(rgba(65, 66, 68, 0.8), rgba(31, 41, 55, 0.9)), url('{{ asset('assets/img/img2.jpeg') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -182,7 +182,8 @@
             color: var(--light-text);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             font-weight: 800;
-            background: linear-gradient(45deg, white, rgb(148, 146, 146));;
+            background: linear-gradient(45deg, white, rgb(148, 146, 146));
+            ;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
@@ -349,7 +350,8 @@
             font-size: 3rem;
             margin-bottom: 2rem;
             color: var(--light-text);
-            background: linear-gradient(45deg, white, white);;
+            background: linear-gradient(45deg, white, white);
+            ;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -393,7 +395,8 @@
             font-size: 3rem;
             margin-bottom: 4rem;
             color: var(--light-text);
-            background: linear-gradient(45deg, white, white);;
+            background: linear-gradient(45deg, white, white);
+            ;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -660,9 +663,8 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="https://files.oaiusercontent.com/file-YTHfAhcevNtGoI9Ma5qE3aWY?se=2024-11-09T04%3A29%3A47Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D3afd7a21-c8e9-420e-82b7-4fa7eb1f0bf5.webp&sig=gEixEm7B5KaDxWazIZ7yZPZ36S581e0IfW3X/I38uO4%3D"
-                alt="Garuda Perpus Logo">
-            <a href="#">Nusa Library</a>
+        <img src="{{ asset('assets/img/img1.jpeg') }}" alt="Garuda Perpus Logo">
+            <a href="#">Nusantara Library</a>
         </div>
         <div class="nav-links">
             <a href="#beranda">Beranda</a>

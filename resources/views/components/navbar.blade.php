@@ -5,6 +5,6 @@
         <button class="btn btn-outline-light me-3" type="button" id="menuButton">
             <i class="fa-solid fa-bars"></i>
         </button>
-        <a class="navbar-brand" href="/">Nusa Library</a>
+        <a class="navbar-brand" href="/">Nusantara Library</a>
     </div>
 </nav>

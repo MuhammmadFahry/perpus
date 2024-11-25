@@ -44,7 +44,7 @@
         <script>
             Swal.fire({
                 title: 'Success',
-                text: '{{ session('status') }}',
+                text: '{{ session ('status') }}',
                 icon: 'success',
                 confirmButtonText: 'Cool'
             })
