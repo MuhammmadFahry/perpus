@@ -49,7 +49,7 @@ Nusa Library adalah solusi perpustakaan digital modern yang dirancang untuk memb
 
 ```bash
 # Clone repositori
-git clone https://github.com/username/nusa-library.git
+git clone (https://github.com/MuhammmadFahry/perpus.git)
 
 # Masuk ke direktori
 cd nusa-library
