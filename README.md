@@ -3,7 +3,7 @@
 # 🏛️ Nusa Library
 
 <p align="center">
-  <img src="https://files.oaiusercontent.com/file-siMytq6V7xX4Nnf6x2C15MKH?se=2024-11-25T03%3A10%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D9a1112ed-0afb-4359-a60f-95da3a07bb21.webp&sig=vQALqxzjNnAost5iRgrw28MI/3QL9o%2BZniij1QT20ac%3D" width="400" alt="Nusa Library Logo">
+  <img src="public/assets/img/img1.jpeg" alt="Nusa Library Logo">
 </p>
 
 </div>
