@@ -113,6 +113,7 @@ Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('admin.s
 Route::post('/superadmin/add-admin', [SuperAdminController::class, 'addAdmin'])->name('superadmin.addAdmin');
 Route::get('/settings/fines', [DendaController::class, 'showFineSettings'])->name('admin.penalties');
 Route::post('/settings/fines', [DendaController::class, 'saveFineSettings'])->name('admin.penalties.save');
+Route::get('/export-pdf', [AdminController::class, 'exportPdf'])->name('export.pdf');
 
 Route::middleware('auth')->group(function () {
     // Route for viewing borrowed books

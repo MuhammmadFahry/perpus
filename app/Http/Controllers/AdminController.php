@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book; // Pastikan model Book diimpor
-use App\Models\Penalty; // Pastikan model Penalty diimpor
-use App\Models\Borrow; // Pastikan model Borrow diimpor
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Book; // Pastikan model Book diimpor
+use App\Models\Borrow; // Pastikan model Borrow diimpor
+use App\Models\Historybooks;
+use App\Models\Penalty; // Pastikan model Penalty diimpor
 
 class AdminController extends Controller
 {
@@ -39,5 +41,17 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.index');
+    }
+
+    public function exportPdf()
+    {
+        // Ambil data history
+        $historysemuanya = Historybooks::with(['book', 'user'])->get();
+
+        // Generate view untuk PDF
+        $pdf = Pdf::loadView('pdf.laporan', compact('historysemuanya'));
+
+        // Return PDF
+        return $pdf->download('history_buku.pdf');
     }
 }

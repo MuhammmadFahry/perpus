@@ -9,6 +9,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <h4>Buku yang Sedang Dipinjam</h4>
+                    <a href="{{ route('export.pdf') }}" class="btn btn-primary float-end">Ekspor ke PDF</a>
                 </div>
                 <div class="card-body">
                     <table class="table">

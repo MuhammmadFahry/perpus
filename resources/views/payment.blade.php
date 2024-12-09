@@ -64,8 +64,6 @@
                     window.location.href = '{{ route('success', $buku_yang_dipinjam->id) }}'
                 }
             });
-
-            // Memulai proses pembayaran
         });
     </script>
 @endsection

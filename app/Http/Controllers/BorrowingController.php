@@ -162,6 +162,6 @@ class BorrowingController extends Controller
         ]);
 
         $borrowing->delete();
-        return redirect()->route('Home');
+        return redirect()->route('home');
     }
 }
