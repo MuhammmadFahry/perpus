@@ -103,7 +103,7 @@
                     @if(auth()->user() && auth()->user()->role !== 'admin')
                     <form id="borrow-form" action="{{ route('books.borrow', $book->id) }}" method="POST" style="display: inline;">
                         @csrf
-                        <input type="hidden" name="return_date" value="{{ \Carbon\Carbon::now()->addDays(-7)->format('Y-m-d') }}" required>
+                        <input type="hidden" name="return_date" value="{{ \Carbon\Carbon::now()->addDays(7)->format('Y-m-d') }}" required>
                         <button type="button" class="btn btn-borrow" onclick="confirmBorrow('{{ $book->title }}', '{{ $book->author }}')">Pinjam</button>
                     </form>
                     @endif
